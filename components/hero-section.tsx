@@ -96,6 +96,15 @@ const itemVariants: Variants = {
   },
 }
 
+const headerVariants: Variants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+  },
+}
+
 const topCardVariants: Variants = {
   hidden: { opacity: 0, y: -28, scale: 0.98, filter: "blur(8px)" },
   visible: {
@@ -273,26 +282,35 @@ function HeroSection() {
 
       <motion.div
         id="work"
-        className="mt-14 space-y-4"
+        aria-labelledby="work-heading"
+        className="mt-14 space-y-8 sm:space-y-10"
         variants={containerVariants}
         initial="hidden"
         animate={isSplashReady ? "visible" : "hidden"}
       >
-        <motion.div
-          variants={itemVariants}
-          className="flex flex-col gap-1 border-t border-border/60 pt-8 sm:flex-row sm:items-end sm:justify-between"
-        >
-          <div className="space-y-1">
-            <p className="font-mono text-[0.7rem] font-medium uppercase tracking-[0.22em] text-muted-foreground">
+        <motion.div className="max-w-3xl space-y-6 border-t border-border/70 pt-8 sm:pt-10" variants={headerVariants}>
+          <div className="flex items-center gap-4">
+            <span className="shrink-0 font-mono text-[0.65rem] font-medium uppercase tracking-[0.22em] text-muted-foreground">
               Snapshot
-            </p>
-            <p className="font-heading text-lg font-semibold tracking-tight text-foreground sm:text-xl">
-              What working with me tends to look like
-            </p>
+            </span>
+            <span
+              className="h-px min-w-8 flex-1 bg-linear-to-r from-border via-border/70 to-transparent"
+              aria-hidden
+            />
           </div>
-          <p className="max-w-md text-pretty text-sm leading-relaxed text-muted-foreground sm:text-right">
-            Numbers are directional—every engagement is scoped to your stack, users, and constraints.
-          </p>
+          <div className="space-y-4 sm:space-y-5">
+            <h2
+              id="work-heading"
+              className="bg-linear-to-br from-foreground via-primary to-foreground/55 bg-clip-text font-heading text-3xl font-semibold tracking-tight text-transparent sm:text-4xl"
+            >
+              What working with me tends to look like
+            </h2>
+            <div className="border-l-2 border-primary/35 pl-3 sm:pl-4">
+              <p className="text-pretty font-mono text-xs leading-relaxed tracking-wide text-muted-foreground sm:text-[0.8125rem] sm:leading-relaxed">
+                Numbers are directional—every engagement is scoped to your stack, users, and constraints.
+              </p>
+            </div>
+          </div>
         </motion.div>
 
         <motion.div
