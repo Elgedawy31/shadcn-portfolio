@@ -1,3 +1,4 @@
+import { ContactSection } from "@/components/contact-section"
 import { ExperienceSection } from "@/components/experience-section"
 import { HeroSection } from "@/components/hero-section"
 import { HomeAmbientBackground } from "@/components/home-ambient-background"
@@ -13,6 +14,7 @@ export default function Page() {
         <HeroSection />
         <SkillsSection />
         <ExperienceSection />
+        <ContactSection />
       </div>
     </main>
   )

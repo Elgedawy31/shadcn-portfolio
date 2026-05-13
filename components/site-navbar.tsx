@@ -12,7 +12,7 @@ const navLinks = [
   { href: "#skills", label: "~/Skills" },
   { href: "#projects", label: "~/Projects" },
   { href: "#experience", label: "~/Experience" },
-  { href: "mailto:mohamedelgedawy40@gmail.com", label: "~/Contact" },
+  { href: "#contact", label: "~/Contact" },
 ]
 
 function subscribeToHydration() {
