@@ -1,7 +1,14 @@
 "use client"
 
 import * as React from "react"
-import { ArrowUpRight, BracketsCurly, DownloadSimple } from "@phosphor-icons/react"
+import {
+  ArrowUpRight,
+  DownloadSimple,
+  Gauge,
+  Package,
+  Timer,
+} from "@phosphor-icons/react"
+import type { Icon } from "@phosphor-icons/react"
 import { motion, useReducedMotion, type Variants } from "framer-motion"
 
 import { LinuxWorkstation } from "@/components/linux-workstation"
@@ -11,10 +18,10 @@ import { Button } from "@/components/ui/button"
 const stackItems = ["React", "Next.js", "TypeScript", "Node.js", "NestJS", "Docker"]
 const roleTitles = ["Frontend Engineer", "Backend Engineer", "Full Stack Engineer", "DevOps Engineer"]
 
-const metrics = [
-  ["35%", "load-time reduction"],
-  ["95", "lighthouse score"],
-  ["10+", "delivered products"],
+const metrics: readonly { value: string; label: string; Icon: Icon }[] = [
+  { value: "35%", label: "load-time reduction", Icon: Timer },
+  { value: "95", label: "lighthouse score", Icon: Gauge },
+  { value: "10+", label: "delivered products", Icon: Package },
 ]
 
 const containerVariants: Variants = {
@@ -215,17 +222,37 @@ function HeroSection() {
         initial="hidden"
         animate={isSplashReady ? "visible" : "hidden"}
       >
-        {metrics.map(([value, label], index) => (
+        {metrics.map(({ value, label, Icon }, index) => (
           <motion.div
             key={label}
-            className="flex items-center gap-3 border border-border/70 bg-transparent p-4 backdrop-blur-xl"
             variants={topCardVariants}
             transition={{ delay: 0.68 + index * 0.1 }}
+            whileHover={
+              reduceMotion
+                ? undefined
+                : { y: -3, scale: 1.02, transition: { type: "spring", stiffness: 380, damping: 22 } }
+            }
+            whileTap={reduceMotion ? undefined : { scale: 0.99 }}
+            className="group relative flex min-h-27 cursor-default overflow-hidden rounded-lg border border-border/60 bg-muted/15 shadow-sm backdrop-blur-sm transition-[border-color,background-color,box-shadow] duration-300 hover:border-primary/45 hover:bg-primary/8 hover:shadow-md motion-reduce:transition-colors"
           >
-            <BracketsCurly weight="duotone" className="size-5 text-primary" />
-            <div>
-              <p className="font-heading text-2xl font-semibold">{value}</p>
-              <p className="font-mono text-xs text-muted-foreground">{label}</p>
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-primary/18 to-transparent transition-transform duration-500 ease-out group-hover:translate-x-full motion-reduce:hidden"
+            />
+            <div
+              aria-hidden
+              className="w-1 shrink-0 bg-primary/40 transition-colors duration-300 group-hover:bg-primary"
+            />
+            <div className="flex min-w-0 flex-1 flex-col justify-between gap-3 p-4 pl-4">
+              <Icon weight="duotone" className="size-5 shrink-0 text-primary" aria-hidden />
+              <div className="space-y-1.5">
+                <p className="font-heading text-3xl font-semibold tabular-nums tracking-tight text-foreground sm:text-[1.85rem] sm:leading-none">
+                  {value}
+                </p>
+                <p className="font-mono text-[0.65rem] font-medium uppercase leading-snug tracking-[0.18em] text-muted-foreground">
+                  {label}
+                </p>
+              </div>
             </div>
           </motion.div>
         ))}
