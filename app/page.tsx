@@ -1,3 +1,4 @@
+import { ExperienceSection } from "@/components/experience-section"
 import { HeroSection } from "@/components/hero-section"
 import { HomeAmbientBackground } from "@/components/home-ambient-background"
 import { SkillsSection } from "@/components/skills-section"
@@ -11,6 +12,7 @@ export default function Page() {
         <SiteNavbar />
         <HeroSection />
         <SkillsSection />
+        <ExperienceSection />
       </div>
     </main>
   )
