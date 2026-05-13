@@ -5,6 +5,7 @@ import {
   ArrowUpRight,
   DownloadSimple,
   Gauge,
+  HandWaving,
   Package,
   Timer,
 } from "@phosphor-icons/react"
@@ -139,8 +140,28 @@ function HeroSection() {
           </motion.div>
 
           <motion.div className="max-w-4xl space-y-5" variants={containerVariants}>
-            <motion.p className="font-mono text-xl text-primary" variants={itemVariants}>
-            Hey,I&apos;m
+            <motion.p
+              className="flex items-center gap-2.5 font-mono text-xl text-primary"
+              variants={itemVariants}
+            >
+              <motion.span
+                aria-hidden
+                className="inline-flex shrink-0 origin-[70%_85%]"
+                animate={
+                  reduceMotion
+                    ? undefined
+                    : { rotate: [0, 16, -12, 14, -10, 8, 0] }
+                }
+                transition={{
+                  duration: 2.5,
+                  repeat: Infinity,
+                  repeatDelay: 1,
+                  ease: "easeInOut",
+                }}
+              >
+                <HandWaving weight="regular" className="size-5 text-primary sm:size-8" />
+              </motion.span>
+              <span>Hey, I&apos;m</span>
             </motion.p>
             <div className="space-y-3">
               <motion.h1
