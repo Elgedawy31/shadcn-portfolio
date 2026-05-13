@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { ArrowUpRight, BracketsCurly, DownloadSimple } from "@phosphor-icons/react"
-import { motion, type Variants } from "framer-motion"
+import { motion, useReducedMotion, type Variants } from "framer-motion"
 
 import { LinuxWorkstation } from "@/components/linux-workstation"
 import { useSplashReady } from "@/components/splash-ready"
@@ -112,6 +112,7 @@ function TypewriterTitle({ isActive }: { isActive: boolean }) {
 
 function HeroSection() {
   const isSplashReady = useSplashReady()
+  const reduceMotion = useReducedMotion()
 
   return (
     <section className="mx-auto flex min-h-[calc(100svh-6rem)] w-full max-w-7xl flex-col justify-center px-4 py-16 sm:py-20">
@@ -185,10 +186,20 @@ function HeroSection() {
             {stackItems.map((item) => (
               <motion.span
                 key={item}
-                className="border border-border/70 bg-transparent px-3 py-1.5 font-mono text-xs text-muted-foreground backdrop-blur-xl"
                 variants={itemVariants}
+                whileHover={
+                  reduceMotion
+                    ? undefined
+                    : { y: -2, scale: 1.03, transition: { type: "spring", stiffness: 420, damping: 24 } }
+                }
+                whileTap={reduceMotion ? undefined : { scale: 0.98 }}
+                className="group relative inline-flex cursor-default select-none overflow-hidden hover:translate-1 duration-300 ease-out border border-border/60 bg-muted/15 px-3.5 py-2 font-mono text-xs text-muted-foreground shadow-sm backdrop-blur-sm transition-[border-color,background-color,color,box-shadow] hover:border-primary/45 hover:bg-primary/8 hover:text-foreground hover:shadow-md motion-reduce:transition-colors"
               >
-                {item}
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-primary/20 to-transparent transition-transform duration-900 ease-out group-hover:translate-x-full motion-reduce:hidden"
+                />
+                <span className="relative z-10">{item}</span>
               </motion.span>
             ))}
           </motion.div>

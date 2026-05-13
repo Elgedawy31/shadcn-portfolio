@@ -1,26 +1,17 @@
 "use client"
 
 import * as React from "react"
-import {
-  FileText,
-  FolderOpen,
-  GithubLogo,
-  HouseLine,
-  LinkedinLogo,
-  Moon,
-  Sun,
-  TerminalWindow,
-} from "@phosphor-icons/react"
+import { DownloadSimple, Moon, Sun } from "@phosphor-icons/react"
 import { motion } from "framer-motion"
 import { useTheme } from "next-themes"
 
 import { useSplashReady } from "@/components/splash-ready"
-import { Button } from "@/components/ui/button"
 
 const navLinks = [
-  { href: "#home", label: "home", icon: HouseLine },
-  { href: "#work", label: "work", icon: FolderOpen },
-  { href: "/mohamed-elgedawy-fullStack.pdf", label: "resume.pdf", icon: FileText },
+  { href: "#home", label: "~/About" },
+  { href: "#work", label: "~/Projects" },
+  { href: "#experience", label: "~/Experience" },
+  { href: "mailto:mohamedelgedawy40@gmail.com", label: "~/Contact" },
 ]
 
 function subscribeToHydration() {
@@ -54,102 +45,59 @@ function SiteNavbar() {
     >
       <motion.nav
         aria-label="Main navigation"
-        className="mx-auto flex max-w-7xl items-center justify-between gap-3 border border-border/60  sm:px-2 bg-background"
+        className="mx-auto grid max-w-7xl grid-cols-[1fr_auto_1fr] items-center gap-3 border border-border/50 bg-background px-3 py-2 "
       >
         <a
           href="#home"
-          className="group flex min-w-0 items-center gap-2 font-mono text-xs text-muted-foreground transition-colors hover:text-foreground"
+          className="font-mono text-sm font-semibold tracking-tight text-foreground"
         >
-          <span className="grid size-7 shrink-0 place-items-center border border-border/70 bg-background/25 text-primary shadow-[inset_0_0_18px_color-mix(in_oklch,var(--primary)_8%,transparent)]">
-            <TerminalWindow weight="duotone" className="size-4" />
-          </span>
-          <span className="hidden items-center gap-1 sm:flex">
-            <span className="text-primary">~</span>
-            <span>/</span>
-            <span>home</span>
-            <span>/</span>
-            <span>mohamed</span>
-            <span>/</span>
-            <span className="text-foreground">portfolio</span>
-          </span>
-          <span className="truncate text-foreground sm:hidden">~/portfolio</span>
+          <span className="text-primary">~/</span>elgedawy
         </a>
 
-        <div className="hidden items-center gap-1 md:flex">
+        <div className="hidden items-center gap-5 md:flex">
           {navLinks.map((link, index) => {
-            const Icon = link.icon
-
             return (
-              <motion.div
+              <motion.a
                 key={link.href}
+                href={link.href}
+                className="font-mono text-xs text-muted-foreground transition-colors hover:text-foreground"
                 initial={{ opacity: 0, y: -6 }}
                 animate={isSplashReady ? { opacity: 1, y: 0 } : { opacity: 0, y: -6 }}
                 transition={{ duration: 0.4, delay: 0.28 + index * 0.06 }}
               >
-                <Button
-                  asChild
-                  variant="ghost"
-                  size="sm"
-                  className="border border-transparent bg-transparent px-2.5 font-mono text-xs text-muted-foreground hover:border-border/70 hover:bg-background/20 hover:text-foreground"
-                >
-                  <a href={link.href}>
-                    <Icon weight="duotone" className="size-3.5" />
-                    <span>{link.label}</span>
-                  </a>
-                </Button>
-              </motion.div>
+                {link.label}
+              </motion.a>
             )
           })}
         </div>
 
-        <div className="flex items-center gap-1">
-          <Button
-            asChild
-            variant="ghost"
-            size="icon-sm"
-            className="border border-border/60 bg-transparent hover:bg-background/20"
-            aria-label="GitHub profile"
-          >
-            <a href="https://github.com/Elgedawy31" target="_blank" rel="noreferrer">
-              <GithubLogo weight="duotone" className="size-4" />
-            </a>
-          </Button>
-          <Button
-            asChild
-            variant="ghost"
-            size="icon-sm"
-            className="border border-border/60 bg-transparent hover:bg-background/20"
-            aria-label="LinkedIn profile"
-          >
-            <a href="https://linkedin.com/in/mohamedelgedawy" target="_blank" rel="noreferrer">
-              <LinkedinLogo weight="duotone" className="size-4" />
-            </a>
-          </Button>
-
+        <div className="flex items-center justify-end gap-2">
           <button
             type="button"
             aria-label={isMounted ? `Switch to ${isDark ? "light" : "dark"} theme` : "Toggle color theme"}
             aria-pressed={isDark}
             onClick={toggleTheme}
-            className="relative ml-1 grid h-8 w-16 grid-cols-2 items-center border border-border/60 bg-transparent p-0.5 text-muted-foreground backdrop-blur-xl transition-colors hover:border-border hover:text-foreground"
+            className="group relative grid size-8 shrink-0 place-items-center rounded-full border border-border/40 bg-muted/25 text-muted-foreground shadow-sm ring-offset-background transition-[color,background-color,border-color,box-shadow,transform] duration-200 hover:border-primary/35 hover:bg-muted/45 hover:text-foreground hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:scale-[0.96]"
           >
-            <span
-              className="absolute left-0.5 top-0.5 h-7 w-7 bg-primary transition-transform duration-300 ease-out data-[state=dark]:translate-x-8"
-              data-state={isDark ? "dark" : "light"}
-            />
-            <span className="relative z-10 grid place-items-center">
+            {isDark ? (
               <Sun
-                weight={isDark ? "regular" : "fill"}
-                className={isDark ? "size-3.5" : "size-3.5 text-primary-foreground"}
+                weight="duotone"
+                className="size-4.5 text-primary transition-transform duration-200 group-hover:rotate-12 group-hover:text-foreground"
               />
-            </span>
-            <span className="relative z-10 grid place-items-center">
+            ) : (
               <Moon
-                weight={isDark ? "fill" : "regular"}
-                className={isDark ? "size-3.5 text-primary-foreground" : "size-3.5"}
+                weight="duotone"
+                className="size-4.5 text-primary transition-transform duration-200 group-hover:-rotate-6 group-hover:text-foreground"
               />
-            </span>
+            )}
           </button>
+          <a
+            href="/mohamed-elgedawy-fullStack.pdf"
+            className="hidden h-8 items-center gap-2 border border-border/60 px-3 font-mono text-xs text-foreground transition-colors hover:border-primary/50 hover:text-primary sm:inline-flex"
+          >
+            <DownloadSimple weight="bold" className="size-3.5" />
+            resume
+          </a>
         </div>
       </motion.nav>
     </motion.header>
