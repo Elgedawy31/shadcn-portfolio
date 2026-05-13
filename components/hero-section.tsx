@@ -281,7 +281,7 @@ function HeroSection() {
       </motion.div>
 
       <motion.div
-        id="work"
+        id="about"
         aria-labelledby="work-heading"
         className="mt-14 space-y-8 sm:space-y-10"
         variants={containerVariants}

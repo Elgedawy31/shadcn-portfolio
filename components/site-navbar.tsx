@@ -8,9 +8,9 @@ import { useTheme } from "next-themes"
 import { useSplashReady } from "@/components/splash-ready"
 
 const navLinks = [
-  { href: "#home", label: "~/About" },
+  { href: "#about", label: "~/About" },
   { href: "#skills", label: "~/Skills" },
-  { href: "#work", label: "~/Projects" },
+  { href: "#projects", label: "~/Projects" },
   { href: "#experience", label: "~/Experience" },
   { href: "mailto:mohamedelgedawy40@gmail.com", label: "~/Contact" },
 ]
