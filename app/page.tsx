@@ -177,7 +177,9 @@ function LinuxWorkstation() {
               <TerminalWindow weight="duotone" className="size-4 text-primary" />
               <span>developer-profile</span>
             </div>
-            <span className="border border-primary/30 px-2 py-1 text-primary">available</span>
+            <span className="border border-emerald-500/35 bg-emerald-500/10 px-2 py-1 text-emerald-500 shadow-[0_0_22px_rgba(16,185,129,0.14)]">
+              available
+            </span>
           </div>
           <div className="space-y-2 leading-6">
             <p>
