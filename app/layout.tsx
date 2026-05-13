@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { JetBrains_Mono, Montserrat, Oxanium } from "next/font/google"
 
 import "./globals.css"
+import { CustomCursor } from "@/components/custom-cursor"
 import { SplashScreen } from "@/components/splash-screen"
 import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils"
@@ -231,6 +232,7 @@ export default function RootLayout({
           }}
         />
         <ThemeProvider>
+          <CustomCursor />
           <SplashScreen>{children}</SplashScreen>
         </ThemeProvider>
       </body>

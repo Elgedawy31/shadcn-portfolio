@@ -134,6 +134,12 @@
   body {
     @apply bg-background text-foreground;
     }
+  @media (pointer: fine) and (hover: hover) {
+    html.custom-cursor-enabled,
+    html.custom-cursor-enabled * {
+      cursor: none !important;
+      }
+    }
   html {
     @apply font-sans;
     scroll-behavior: smooth;
