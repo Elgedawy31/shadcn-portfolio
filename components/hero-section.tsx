@@ -1,5 +1,6 @@
 "use client"
 
+import * as React from "react"
 import { ArrowUpRight, BracketsCurly, DownloadSimple } from "@phosphor-icons/react"
 import { motion, type Variants } from "framer-motion"
 
@@ -8,6 +9,7 @@ import { useSplashReady } from "@/components/splash-ready"
 import { Button } from "@/components/ui/button"
 
 const stackItems = ["React", "Next.js", "TypeScript", "Node.js", "NestJS", "Docker"]
+const roleTitles = ["Frontend Engineer", "Backend Engineer", "Full Stack Engineer", "DevOps Engineer"]
 
 const metrics = [
   ["35%", "load-time reduction"],
@@ -62,6 +64,52 @@ const topCardVariants: Variants = {
   },
 }
 
+function TypewriterTitle({ isActive }: { isActive: boolean }) {
+  const [roleIndex, setRoleIndex] = React.useState(0)
+  const [visibleLetters, setVisibleLetters] = React.useState(0)
+  const [isDeleting, setIsDeleting] = React.useState(false)
+  const currentRole = roleTitles[roleIndex]
+
+  React.useEffect(() => {
+    if (!isActive) {
+      return
+    }
+
+    const isComplete = visibleLetters === currentRole.length
+    const isEmpty = visibleLetters === 0
+    const delay = isComplete && !isDeleting ? 1200 : isEmpty && isDeleting ? 240 : isDeleting ? 34 : 58
+
+    const timer = window.setTimeout(() => {
+      if (isComplete && !isDeleting) {
+        setIsDeleting(true)
+        return
+      }
+
+      if (isEmpty && isDeleting) {
+        setIsDeleting(false)
+        setRoleIndex((currentIndex) => (currentIndex + 1) % roleTitles.length)
+        return
+      }
+
+      setVisibleLetters((currentLetters) => currentLetters + (isDeleting ? -1 : 1))
+    }, delay)
+
+    return () => {
+      window.clearTimeout(timer)
+    }
+  }, [currentRole.length, isActive, isDeleting, visibleLetters])
+
+  return (
+    <span className="inline-flex min-h-8 items-center font-mono text-lg text-muted-foreground sm:text-xl">
+      <span className="text-primary">const</span>
+      <span className="mx-2 text-foreground">role</span>
+      <span className="text-muted-foreground">=</span>
+      <span className="ml-2 text-foreground">&quot;{currentRole.slice(0, visibleLetters)}&quot;</span>
+      <span className="ml-1 h-6 w-2 animate-pulse bg-primary" />
+    </span>
+  )
+}
+
 function HeroSection() {
   const isSplashReady = useSplashReady()
 
@@ -84,20 +132,28 @@ function HeroSection() {
 
           <motion.div className="max-w-4xl space-y-5" variants={containerVariants}>
             <motion.p className="font-mono text-sm text-primary" variants={itemVariants}>
-              Full Stack Engineer
+              Engineer / Builder
             </motion.p>
-            <motion.h1
-              className="max-w-4xl text-balance font-heading text-5xl font-semibold leading-[0.98] sm:text-6xl lg:text-7xl"
-              variants={itemVariants}
-            >
-              Mohamed Elgedawy builds fast, reliable web products.
-            </motion.h1>
+            <div className="space-y-3">
+              <motion.h1
+                className="max-w-3xl text-balance font-heading text-4xl font-semibold leading-none sm:text-5xl lg:text-6xl"
+                variants={itemVariants}
+              >
+                Mohamed Elgedawy
+              </motion.h1>
+              <motion.p
+                className="max-w-3xl text-balance text-lg font-medium leading-8 text-muted-foreground sm:text-xl"
+                variants={itemVariants}
+              >
+                <TypewriterTitle isActive={isSplashReady} />
+              </motion.p>
+            </div>
             <motion.p
               className="max-w-2xl text-pretty text-base leading-8 text-muted-foreground sm:text-lg"
               variants={itemVariants}
             >
-              I design and ship production-ready applications with React, Next.js, TypeScript, Node.js,
-              Docker, CI/CD, and clean frontend systems focused on performance and SEO.
+              I design and ship production-ready applications across frontend, backend, full-stack, and
+              DevOps workflows with a focus on performance, SEO, and scalable architecture.
             </motion.p>
           </motion.div>
 
