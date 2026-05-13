@@ -3,6 +3,8 @@
 import * as React from "react"
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
 
+import { markSplashReady } from "@/components/splash-ready"
+
 function SplashScreen({ children }: { children: React.ReactNode }) {
   const prefersReducedMotion = useReducedMotion()
   const [isVisible, setIsVisible] = React.useState(true)
@@ -22,6 +24,7 @@ function SplashScreen({ children }: { children: React.ReactNode }) {
     const closeTimer = window.setTimeout(() => {
       setProgress(100)
       setIsVisible(false)
+      markSplashReady()
     }, duration)
 
     return () => {

@@ -2,7 +2,6 @@
 
 import * as React from "react"
 import {
-  Desktop,
   FileText,
   FolderOpen,
   GithubLogo,
@@ -12,10 +11,11 @@ import {
   Sun,
   TerminalWindow,
 } from "@phosphor-icons/react"
+import { motion } from "framer-motion"
 import { useTheme } from "next-themes"
 
+import { useSplashReady } from "@/components/splash-ready"
 import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
 
 const navLinks = [
   { href: "#home", label: "home", icon: HouseLine },
@@ -23,19 +23,36 @@ const navLinks = [
   { href: "/mohamed-elgedawy-fullStack.pdf", label: "resume.pdf", icon: FileText },
 ]
 
-const themeOptions = [
-  { value: "light", label: "Light", icon: Sun },
-  { value: "dark", label: "Dark", icon: Moon },
-  { value: "system", label: "System", icon: Desktop },
-]
+function subscribeToHydration() {
+  return () => {}
+}
 
 function SiteNavbar() {
-  const { theme, setTheme } = useTheme()
-  const activeTheme = theme ?? "system"
+  const isSplashReady = useSplashReady()
+  const { resolvedTheme, setTheme } = useTheme()
+  const isMounted = React.useSyncExternalStore(
+    subscribeToHydration,
+    () => true,
+    () => false,
+  )
+  const isDark = isMounted && resolvedTheme === "dark"
+
+  function toggleTheme() {
+    setTheme(resolvedTheme === "dark" ? "light" : "dark")
+  }
 
   return (
-    <header className="sticky top-4 z-40 px-4">
-      <nav
+    <motion.header
+      className="sticky top-4 z-40 px-4"
+      initial={{ opacity: 0, y: -18, filter: "blur(8px)" }}
+      animate={
+        isSplashReady
+          ? { opacity: 1, y: 0, filter: "blur(0px)" }
+          : { opacity: 0, y: -18, filter: "blur(8px)" }
+      }
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+    >
+      <motion.nav
         aria-label="Main navigation"
         className="mx-auto flex max-w-6xl items-center justify-between gap-3 border border-border/60 bg-transparent px-3 py-2 shadow-[0_18px_60px_color-mix(in_oklch,var(--foreground)_7%,transparent)] backdrop-blur-xl backdrop-saturate-150 sm:px-4"
       >
@@ -59,22 +76,28 @@ function SiteNavbar() {
         </a>
 
         <div className="hidden items-center gap-1 md:flex">
-          {navLinks.map((link) => {
+          {navLinks.map((link, index) => {
             const Icon = link.icon
 
             return (
-              <Button
+              <motion.div
                 key={link.href}
-                asChild
-                variant="ghost"
-                size="sm"
-                className="border border-transparent bg-transparent px-2.5 font-mono text-xs text-muted-foreground hover:border-border/70 hover:bg-background/20 hover:text-foreground"
+                initial={{ opacity: 0, y: -6 }}
+                animate={isSplashReady ? { opacity: 1, y: 0 } : { opacity: 0, y: -6 }}
+                transition={{ duration: 0.4, delay: 0.28 + index * 0.06 }}
               >
-                <a href={link.href}>
-                  <Icon weight="duotone" className="size-3.5" />
-                  <span>{link.label}</span>
-                </a>
-              </Button>
+                <Button
+                  asChild
+                  variant="ghost"
+                  size="sm"
+                  className="border border-transparent bg-transparent px-2.5 font-mono text-xs text-muted-foreground hover:border-border/70 hover:bg-background/20 hover:text-foreground"
+                >
+                  <a href={link.href}>
+                    <Icon weight="duotone" className="size-3.5" />
+                    <span>{link.label}</span>
+                  </a>
+                </Button>
+              </motion.div>
             )
           })}
         </div>
@@ -103,31 +126,33 @@ function SiteNavbar() {
             </a>
           </Button>
 
-          <div className="ml-1 flex items-center border border-border/60 bg-transparent p-0.5 backdrop-blur-xl">
-            {themeOptions.map((option) => {
-              const Icon = option.icon
-              const isActive = activeTheme === option.value
-
-              return (
-                <button
-                  key={option.value}
-                  type="button"
-                  aria-label={`Use ${option.label.toLowerCase()} theme`}
-                  aria-pressed={isActive}
-                  onClick={() => setTheme(option.value)}
-                  className={cn(
-                    "grid size-7 place-items-center text-muted-foreground transition-colors hover:bg-background/20 hover:text-foreground",
-                    isActive && "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground",
-                  )}
-                >
-                  <Icon weight={isActive ? "fill" : "duotone"} className="size-3.5" />
-                </button>
-              )
-            })}
-          </div>
+          <button
+            type="button"
+            aria-label={isMounted ? `Switch to ${isDark ? "light" : "dark"} theme` : "Toggle color theme"}
+            aria-pressed={isDark}
+            onClick={toggleTheme}
+            className="relative ml-1 grid h-8 w-16 grid-cols-2 items-center border border-border/60 bg-transparent p-0.5 text-muted-foreground backdrop-blur-xl transition-colors hover:border-border hover:text-foreground"
+          >
+            <span
+              className="absolute left-0.5 top-0.5 h-7 w-7 bg-primary transition-transform duration-300 ease-out data-[state=dark]:translate-x-8"
+              data-state={isDark ? "dark" : "light"}
+            />
+            <span className="relative z-10 grid place-items-center">
+              <Sun
+                weight={isDark ? "regular" : "fill"}
+                className={isDark ? "size-3.5" : "size-3.5 text-primary-foreground"}
+              />
+            </span>
+            <span className="relative z-10 grid place-items-center">
+              <Moon
+                weight={isDark ? "fill" : "regular"}
+                className={isDark ? "size-3.5 text-primary-foreground" : "size-3.5"}
+              />
+            </span>
+          </button>
         </div>
-      </nav>
-    </header>
+      </motion.nav>
+    </motion.header>
   )
 }
 
