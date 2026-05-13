@@ -9,6 +9,7 @@ import { useSplashReady } from "@/components/splash-ready"
 
 const navLinks = [
   { href: "#home", label: "~/About" },
+  { href: "#skills", label: "~/Skills" },
   { href: "#work", label: "~/Projects" },
   { href: "#experience", label: "~/Experience" },
   { href: "mailto:mohamedelgedawy40@gmail.com", label: "~/Contact" },

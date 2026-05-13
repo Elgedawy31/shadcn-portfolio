@@ -1,5 +1,6 @@
 import { HeroSection } from "@/components/hero-section"
 import { HomeAmbientBackground } from "@/components/home-ambient-background"
+import { SkillsSection } from "@/components/skills-section"
 import { SiteNavbar } from "@/components/site-navbar"
 
 export default function Page() {
@@ -9,6 +10,7 @@ export default function Page() {
       <div className="relative z-10">
         <SiteNavbar />
         <HeroSection />
+        <SkillsSection />
       </div>
     </main>
   )
