@@ -115,7 +115,7 @@ function HeroSection() {
   const reduceMotion = useReducedMotion()
 
   return (
-    <section className="mx-auto flex min-h-[calc(100svh-6rem)] w-full max-w-7xl flex-col justify-center px-4 py-16 sm:py-20">
+    <section className="mx-auto flex  w-full max-w-7xl flex-col justify-center px-4 py-16 sm:py-20">
       <motion.div
         className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_34rem] lg:items-center xl:grid-cols-[minmax(0,1fr)_38rem]"
         variants={containerVariants}

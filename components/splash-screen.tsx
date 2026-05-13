@@ -3,6 +3,7 @@
 import * as React from "react"
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
 
+import { AmbientGridPattern } from "@/components/ambient-grid"
 import { markSplashReady, useSplashDocumentScrollLock } from "@/components/splash-ready"
 
 function SplashScreen({ children }: { children: React.ReactNode }) {
@@ -58,7 +59,7 @@ function SplashScreen({ children }: { children: React.ReactNode }) {
             transition={{ duration: prefersReducedMotion ? 0.15 : 0.55, ease: "easeInOut" }}
           >
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,color-mix(in_oklch,var(--primary)_16%,transparent),transparent_52%)]" />
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,color-mix(in_oklch,var(--border)_55%,transparent)_1px,transparent_1px),linear-gradient(to_bottom,color-mix(in_oklch,var(--border)_55%,transparent)_1px,transparent_1px)] bg-[size:72px_72px] opacity-30 [mask-image:linear-gradient(to_bottom,transparent,black_18%,black_82%,transparent)]" />
+            <AmbientGridPattern />
 
             <motion.div
               className="relative flex w-full max-w-xl flex-col items-center gap-8 text-center"

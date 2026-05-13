@@ -1,11 +1,15 @@
 import { HeroSection } from "@/components/hero-section"
+import { HomeAmbientBackground } from "@/components/home-ambient-background"
 import { SiteNavbar } from "@/components/site-navbar"
 
 export default function Page() {
   return (
-    <main id="home" className="min-h-svh overflow-x-clip">
-      <SiteNavbar />
-      <HeroSection />
+    <main id="home" className="relative min-h-svh overflow-x-clip bg-background">
+      <HomeAmbientBackground />
+      <div className="relative z-10">
+        <SiteNavbar />
+        <HeroSection />
+      </div>
     </main>
   )
 }
