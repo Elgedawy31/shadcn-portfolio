@@ -133,11 +133,96 @@
     }
   body {
     @apply bg-background text-foreground;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    overflow-x: clip;
+    width: 100%;
+    }
+  html {
+    overflow-x: clip;
+    width: 100%;
     }
   @media (pointer: fine) and (hover: hover) {
     html.custom-cursor-enabled,
     html.custom-cursor-enabled * {
       cursor: none !important;
+      }
+    }
+  .cursor-dot,
+  .cursor-ring {
+    pointer-events: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    transform: translate3d(-100px, -100px, 0);
+    will-change: transform, opacity;
+    }
+  .cursor-dot {
+    z-index: 2147483647;
+    width: 0.25rem;
+    height: 0.25rem;
+    margin-left: -0.125rem;
+    margin-top: -0.125rem;
+    border-radius: 999px;
+    background: var(--primary);
+    box-shadow:
+      0 0 0 1px color-mix(in oklch, var(--background) 50%, transparent),
+      0 0 8px color-mix(in oklch, var(--foreground) 22%, transparent),
+      0 0 16px color-mix(in oklch, var(--primary) 16%, transparent);
+    transition:
+      opacity 180ms ease,
+      background-color 180ms ease,
+      box-shadow 180ms ease;
+    }
+  .cursor-ring {
+    z-index: 2147483646;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-left: -0.75rem;
+    margin-top: -0.75rem;
+    border: 1px solid color-mix(in oklch, var(--foreground) 30%, var(--primary));
+    border-radius: 999px;
+    background: color-mix(in oklch, var(--primary) 2.5%, transparent);
+    box-shadow:
+      0 0 10px color-mix(in oklch, var(--foreground) 9%, transparent),
+      0 0 20px color-mix(in oklch, var(--primary) 8%, transparent),
+      inset 0 0 10px color-mix(in oklch, var(--foreground) 4%, transparent);
+    backdrop-filter: blur(0.75px);
+    contain: layout paint style;
+    transition:
+      opacity 180ms ease,
+      width 340ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      height 340ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      margin 340ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      border-color 220ms ease,
+      background-color 220ms ease,
+      box-shadow 220ms ease;
+    }
+  .cursor-ring--hover {
+    width: 2rem;
+    height: 2rem;
+    margin-left: -1rem;
+    margin-top: -1rem;
+    border-color: color-mix(in oklch, var(--foreground) 22%, var(--primary));
+    background: color-mix(in oklch, var(--primary) 4%, transparent);
+    box-shadow:
+      0 0 14px color-mix(in oklch, var(--primary) 14%, transparent),
+      0 0 26px color-mix(in oklch, var(--primary) 8%, transparent),
+      inset 0 0 12px color-mix(in oklch, var(--primary) 5%, transparent);
+    }
+  .cursor-ring--pressed {
+    width: 1rem;
+    height: 1rem;
+    margin-left: -0.5rem;
+    margin-top: -0.5rem;
+    border-color: color-mix(in oklch, var(--destructive) 44%, var(--foreground));
+    background: color-mix(in oklch, var(--destructive) 4%, transparent);
+    }
+  @media (hover: none), (pointer: coarse) {
+    .cursor-dot,
+    .cursor-ring {
+      display: none;
       }
     }
   html {
