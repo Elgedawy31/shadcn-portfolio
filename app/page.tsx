@@ -111,11 +111,25 @@ const terminalLineVariants: Variants = {
 }
 
 function LinuxWorkstation() {
+  const terminalOutputRef = React.useRef<HTMLDivElement>(null)
   const [command, setCommand] = React.useState("")
   const [history, setHistory] = React.useState([
     { command: "echo $STATUS", output: ["Open to new opportunities"] },
     { command: "help", output: terminalResponses.help },
   ])
+
+  React.useEffect(() => {
+    const terminalOutput = terminalOutputRef.current
+
+    if (!terminalOutput) {
+      return
+    }
+
+    terminalOutput.scrollTo({
+      top: terminalOutput.scrollHeight,
+      behavior: "smooth",
+    })
+  }, [history])
 
   function runCommand(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -255,7 +269,7 @@ function LinuxWorkstation() {
             <span>interactive-shell</span>
             <span className="text-muted-foreground">type help</span>
           </div>
-          <div className="max-h-40 space-y-3 overflow-y-auto pr-1 leading-6">
+          <div ref={terminalOutputRef} className="max-h-40 space-y-3 overflow-y-auto pr-1 leading-6">
             {history.map((entry, index) => (
               <div key={`${entry.command}-${index}`}>
                 <p className="text-foreground">
