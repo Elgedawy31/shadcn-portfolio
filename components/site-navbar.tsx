@@ -54,7 +54,7 @@ function SiteNavbar() {
     >
       <motion.nav
         aria-label="Main navigation"
-        className="mx-auto flex max-w-6xl items-center justify-between gap-3 border border-border/60 bg-transparent px-3 py-2 shadow-[0_18px_60px_color-mix(in_oklch,var(--foreground)_7%,transparent)] backdrop-blur-xl backdrop-saturate-150 sm:px-4"
+        className="mx-auto flex max-w-7xl items-center justify-between gap-3 border border-border/60 bg-transparent px-3 py-2 shadow-[0_18px_60px_color-mix(in_oklch,var(--foreground)_7%,transparent)] backdrop-blur-xl backdrop-saturate-150 sm:px-4"
       >
         <a
           href="#home"
