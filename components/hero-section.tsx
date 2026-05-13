@@ -132,8 +132,8 @@ function HeroSection() {
           </motion.div>
 
           <motion.div className="max-w-4xl space-y-5" variants={containerVariants}>
-            <motion.p className="font-mono text-sm text-primary" variants={itemVariants}>
-              Engineer / Builder
+            <motion.p className="font-mono text-xl text-primary" variants={itemVariants}>
+            Hey,I&apos;m
             </motion.p>
             <div className="space-y-3">
               <motion.h1
