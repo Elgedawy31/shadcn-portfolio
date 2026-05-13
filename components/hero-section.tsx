@@ -254,7 +254,7 @@ function HeroSection() {
                 : { y: -3, scale: 1.02, transition: { type: "spring", stiffness: 380, damping: 22 } }
             }
             whileTap={reduceMotion ? undefined : { scale: 0.99 }}
-            className="group relative flex min-h-27 cursor-default overflow-hidden rounded-lg border border-border/60 bg-muted/15 shadow-sm backdrop-blur-sm transition-[border-color,background-color,box-shadow] duration-300 hover:border-primary/45 hover:bg-primary/8 hover:shadow-md motion-reduce:transition-colors"
+            className="group relative flex min-h-27 cursor-default overflow-hidden rounded-lg border border-border/60 bg-background/55 shadow-sm backdrop-blur-sm transition-[border-color,background-color,box-shadow] duration-300 hover:border-primary/45 hover:bg-primary/8 hover:shadow-md motion-reduce:transition-colors"
           >
             <span
               aria-hidden

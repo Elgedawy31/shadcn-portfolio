@@ -57,7 +57,10 @@ function SkillsSection() {
             />
           </div>
           <div className="space-y-4 sm:space-y-5">
-            <h2 id="skills-heading" className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
+            <h2
+              id="skills-heading"
+              className="bg-linear-to-br from-foreground via-primary to-foreground/55 bg-clip-text font-heading text-3xl font-semibold tracking-tight text-transparent sm:text-4xl"
+            >
               Tools I ship with
             </h2>
             <div className="border-l-2 border-primary/35 pl-3 sm:pl-4">
