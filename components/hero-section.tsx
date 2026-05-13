@@ -21,8 +21,8 @@ const roleTitles = ["Frontend Engineer", "Backend Engineer", "Full Stack Enginee
 
 const metrics: readonly { value: string; label: string; Icon: Icon }[] = [
   { value: "35%", label: "load-time reduction", Icon: Timer },
-  { value: "95", label: "lighthouse score", Icon: Gauge },
-  { value: "10+", label: "delivered products", Icon: Package },
+  { value: "97", label: "lighthouse score", Icon: Gauge },
+  { value: "20+", label: "delivered products", Icon: Package },
 ]
 
 const containerVariants: Variants = {

@@ -3,6 +3,7 @@ import { JetBrains_Mono, Montserrat, Oxanium } from "next/font/google"
 
 import "./globals.css"
 import { CustomCursor } from "@/components/custom-cursor"
+import { SmoothScroll } from "@/components/smooth-scroll"
 import { SplashScreen } from "@/components/splash-screen"
 import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils"
@@ -233,7 +234,9 @@ export default function RootLayout({
         />
         <ThemeProvider>
           <CustomCursor />
-          <SplashScreen>{children}</SplashScreen>
+          <SplashScreen>
+            <SmoothScroll>{children}</SmoothScroll>
+          </SplashScreen>
         </ThemeProvider>
       </body>
     </html>
