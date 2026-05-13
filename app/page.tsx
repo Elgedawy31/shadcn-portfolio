@@ -112,6 +112,8 @@ const terminalLineVariants: Variants = {
 
 function LinuxWorkstation() {
   const terminalOutputRef = React.useRef<HTMLDivElement>(null)
+  const terminalInputRef = React.useRef<HTMLInputElement>(null)
+  const isSplashReady = useSplashReady()
   const [command, setCommand] = React.useState("")
   const [history, setHistory] = React.useState([
     { command: "echo $STATUS", output: ["Open to new opportunities"] },
@@ -130,6 +132,20 @@ function LinuxWorkstation() {
       behavior: "smooth",
     })
   }, [history])
+
+  React.useEffect(() => {
+    if (!isSplashReady) {
+      return
+    }
+
+    const focusTimer = window.setTimeout(() => {
+      terminalInputRef.current?.focus()
+    }, 450)
+
+    return () => {
+      window.clearTimeout(focusTimer)
+    }
+  }, [isSplashReady])
 
   function runCommand(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -192,7 +208,7 @@ function LinuxWorkstation() {
               <span>developer-profile</span>
             </div>
             <span className="border border-emerald-500/35 bg-emerald-500/10 px-2 py-1 text-emerald-500 shadow-[0_0_22px_rgba(16,185,129,0.14)]">
-              available
+              Works
             </span>
           </div>
           <div className="space-y-2 leading-6">
@@ -286,6 +302,7 @@ function LinuxWorkstation() {
           <form onSubmit={runCommand} className="mt-4 flex items-center gap-2 border-t border-border/70 pt-3">
             <span className="text-primary">$</span>
             <input
+              ref={terminalInputRef}
               value={command}
               onChange={(event) => setCommand(event.target.value)}
               aria-label="Portfolio terminal command"
