@@ -1,19 +1,22 @@
 import type { Metadata } from "next"
-import { Geist, JetBrains_Mono, DM_Sans } from "next/font/google"
+import { JetBrains_Mono, Montserrat, Oxanium } from "next/font/google"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils"
 
 const siteUrl = "https://mohamedelgedawy.com"
-const profileImage = "/me-sute.png"
+const profileImage = "/logo.png"
 const resumeUrl = "/mohamed-elgedawy-fullStack.pdf"
 const previewImageUrl = `${siteUrl}${profileImage}`
 const resumePreviewUrl = `${siteUrl}${resumeUrl}`
 
-const dmSansHeading = DM_Sans({ subsets: ["latin"], variable: "--font-heading" })
+const fontHeading = Oxanium({
+  subsets: ["latin"],
+  variable: "--font-heading",
+})
 
-const fontSans = Geist({
+const fontSans = Montserrat({
   subsets: ["latin"],
   variable: "--font-sans",
 })
@@ -212,7 +215,12 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn("antialiased", fontSans.variable, "font-mono", jetbrainsMono.variable, dmSansHeading.variable)}
+      className={cn(
+        "font-sans antialiased",
+        fontSans.variable,
+        fontHeading.variable,
+        jetbrainsMono.variable,
+      )}
     >
       <body>
         <script

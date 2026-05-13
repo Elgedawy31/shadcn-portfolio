@@ -74,6 +74,7 @@
 }
 
 @theme inline {
+    --font-sans: var(--font-sans);
     --font-mono: var(--font-mono);
     --font-heading: var(--font-heading);
     --color-sidebar-ring: var(--sidebar-ring);
@@ -134,9 +135,12 @@
     @apply bg-background text-foreground;
     }
   html {
-    @apply font-mono;
+    @apply font-sans;
     scroll-behavior: smooth;
     scrollbar-gutter: stable;
+    }
+  :is(h1, h2, h3, h4, h5, h6) {
+    @apply font-heading;
     }
   @media (prefers-reduced-motion: reduce) {
     html {
