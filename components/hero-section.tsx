@@ -3,11 +3,12 @@
 import * as React from "react"
 import {
   ArrowUpRight,
+  Briefcase,
   DownloadSimple,
   Gauge,
   HandWaving,
   Package,
-  Timer,
+  PlugsConnected,
 } from "@phosphor-icons/react"
 import type { Icon } from "@phosphor-icons/react"
 import { motion, useReducedMotion, type Variants } from "framer-motion"
@@ -19,10 +20,44 @@ import { Button } from "@/components/ui/button"
 const stackItems = ["React", "Next.js", "TypeScript", "Node.js", "NestJS", "Docker"]
 const roleTitles = ["Frontend Engineer", "Backend Engineer", "Full Stack Engineer", "DevOps Engineer"]
 
-const metrics: readonly { value: string; label: string; Icon: Icon }[] = [
-  { value: "35%", label: "load-time reduction", Icon: Timer },
-  { value: "97", label: "lighthouse score", Icon: Gauge },
-  { value: "20+", label: "delivered products", Icon: Package },
+const metrics: readonly {
+  value: string
+  label: string
+  hint: string
+  Icon: Icon
+  featured?: boolean
+  /** Tailwind grid placement (bento on lg, readable stack on sm). */
+  gridClass: string
+}[] = [
+  {
+    value: "3+",
+    label: "Years in production",
+    hint: "Shipping full-stack & cloud-backed apps end to end.",
+    Icon: Briefcase,
+    featured: true,
+    gridClass: "sm:col-span-2 lg:col-span-5 lg:row-span-2",
+  },
+  {
+    value: "98+",
+    label: "Lighthouse performance",
+    hint: "Performance-first builds; strong scores on real audit runs.",
+    Icon: Gauge,
+    gridClass: "lg:col-span-4 lg:col-start-6 lg:row-start-1",
+  },
+  {
+    value: "20+",
+    label: "Products delivered",
+    hint: "MVPs, internal tools, and customer-facing releases.",
+    Icon: Package,
+    gridClass: "lg:col-span-3 lg:col-start-10 lg:row-start-1",
+  },
+  {
+    value: "15+",
+    label: "APIs & integrations",
+    hint: "REST, GraphQL, webhooks, and third-party platform work.",
+    Icon: PlugsConnected,
+    gridClass: "sm:col-span-2 lg:col-span-7 lg:col-start-6 lg:row-start-2",
+  },
 ]
 
 const containerVariants: Variants = {
@@ -238,45 +273,110 @@ function HeroSection() {
 
       <motion.div
         id="work"
-        className="mt-12 grid gap-3 border-t border-border/70 pt-6 sm:grid-cols-3"
+        className="mt-14 space-y-4"
         variants={containerVariants}
         initial="hidden"
         animate={isSplashReady ? "visible" : "hidden"}
       >
-        {metrics.map(({ value, label, Icon }, index) => (
-          <motion.div
-            key={label}
-            variants={topCardVariants}
-            transition={{ delay: 0.68 + index * 0.1 }}
-            whileHover={
-              reduceMotion
-                ? undefined
-                : { y: -3, scale: 1.02, transition: { type: "spring", stiffness: 380, damping: 22 } }
-            }
-            whileTap={reduceMotion ? undefined : { scale: 0.99 }}
-            className="group relative flex min-h-27 cursor-default overflow-hidden rounded-lg border border-border/60 bg-background/55 shadow-sm backdrop-blur-sm transition-[border-color,background-color,box-shadow] duration-300 hover:border-primary/45 hover:bg-primary/8 hover:shadow-md motion-reduce:transition-colors"
-          >
-            <span
-              aria-hidden
-              className="pointer-events-none absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-primary/18 to-transparent transition-transform duration-500 ease-out group-hover:translate-x-full motion-reduce:hidden"
-            />
-            <div
-              aria-hidden
-              className="w-1 shrink-0 bg-primary/40 transition-colors duration-300 group-hover:bg-primary"
-            />
-            <div className="flex min-w-0 flex-1 flex-col justify-between gap-3 p-4 pl-4">
-              <Icon weight="duotone" className="size-5 shrink-0 text-primary" aria-hidden />
-              <div className="space-y-1.5">
-                <p className="font-heading text-3xl font-semibold tabular-nums tracking-tight text-foreground sm:text-[1.85rem] sm:leading-none">
-                  {value}
-                </p>
-                <p className="font-mono text-[0.65rem] font-medium uppercase leading-snug tracking-[0.18em] text-muted-foreground">
-                  {label}
-                </p>
-              </div>
-            </div>
-          </motion.div>
-        ))}
+        <motion.div
+          variants={itemVariants}
+          className="flex flex-col gap-1 border-t border-border/60 pt-8 sm:flex-row sm:items-end sm:justify-between"
+        >
+          <div className="space-y-1">
+            <p className="font-mono text-[0.7rem] font-medium uppercase tracking-[0.22em] text-muted-foreground">
+              Snapshot
+            </p>
+            <p className="font-heading text-lg font-semibold tracking-tight text-foreground sm:text-xl">
+              What working with me tends to look like
+            </p>
+          </div>
+          <p className="max-w-md text-pretty text-sm leading-relaxed text-muted-foreground sm:text-right">
+            Numbers are directional—every engagement is scoped to your stack, users, and constraints.
+          </p>
+        </motion.div>
+
+        <motion.div
+          variants={itemVariants}
+          className="relative overflow-hidden rounded-2xl border border-border/50 bg-linear-to-br from-muted/40 via-background/80 to-background p-px shadow-[0_1px_0_0_oklch(1_0_0/6%)_inset] backdrop-blur-xl dark:shadow-[0_1px_0_0_oklch(1_0_0/8%)_inset]"
+        >
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -left-24 top-0 size-72 rounded-full bg-primary/12 blur-3xl"
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -right-16 bottom-0 size-56 rounded-full bg-primary/8 blur-3xl"
+          />
+          <div className="relative grid auto-rows-fr gap-px rounded-[calc(var(--radius-2xl)-1px)] bg-border/55 p-px sm:grid-cols-2 lg:grid-cols-12 lg:grid-rows-2">
+            {metrics.map(({ value, label, hint, Icon, featured, gridClass }, index) => (
+              <motion.div
+                key={label}
+                variants={topCardVariants}
+                transition={{ delay: 0.68 + index * 0.08 }}
+                whileHover={
+                  reduceMotion
+                    ? undefined
+                    : { y: -2, transition: { type: "spring", stiffness: 420, damping: 28 } }
+                }
+                whileTap={reduceMotion ? undefined : { scale: 0.995 }}
+                className={`group relative flex min-h-[9.5rem] cursor-default flex-col justify-between overflow-hidden bg-background/90 p-5 sm:min-h-0 sm:p-6 lg:min-h-[10.5rem] ${gridClass} ${
+                  featured ? "sm:flex-row sm:items-stretch sm:gap-8" : ""
+                }`}
+              >
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 bg-radial-[circle_at_50%_0%] from-primary/16 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 motion-reduce:opacity-0"
+                />
+                <div
+                  className={
+                    featured
+                      ? "relative z-10 flex flex-1 flex-col justify-between gap-6"
+                      : "relative z-10 flex flex-1 flex-col justify-between gap-5"
+                  }
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <span className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-muted/25 px-2.5 py-1 font-mono text-[0.62rem] font-medium uppercase tracking-[0.16em] text-muted-foreground">
+                      <span className="size-1.5 rounded-full bg-primary ring-[3px] ring-primary/25" />
+                      {featured ? "Tenure" : "Signal"}
+                    </span>
+                    <Icon
+                      weight="duotone"
+                      className={
+                        featured
+                          ? "size-8 shrink-0 text-primary/90 sm:size-9"
+                          : "size-7 shrink-0 text-primary/85"
+                      }
+                      aria-hidden
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <p
+                      className={
+                        featured
+                          ? "font-heading text-4xl font-semibold tabular-nums tracking-tighter text-foreground sm:text-5xl"
+                          : "font-heading text-3xl font-semibold tabular-nums tracking-tight text-foreground sm:text-[2.1rem] sm:leading-none"
+                      }
+                    >
+                      {value}
+                    </p>
+                    <p className="font-heading text-sm font-medium text-foreground sm:text-base">{label}</p>
+                    <p className="max-w-prose text-pretty text-xs leading-relaxed text-muted-foreground sm:text-sm">
+                      {hint}
+                    </p>
+                  </div>
+                </div>
+                {featured ? (
+                  <div className="relative z-10 mt-6 hidden h-full min-w-[40%] flex-col justify-end border-t border-dashed border-border/60 pt-6 font-mono text-[0.65rem] uppercase leading-relaxed tracking-[0.14em] text-muted-foreground sm:mt-0 sm:flex sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0">
+                    <p className="text-balance">
+                      Production ownership across UI, APIs, infra, and release hygiene—not slide-deck
+                      estimates.
+                    </p>
+                  </div>
+                ) : null}
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </motion.div>
     </section>
   )
