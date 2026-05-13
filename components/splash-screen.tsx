@@ -3,12 +3,15 @@
 import * as React from "react"
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
 
-import { markSplashReady } from "@/components/splash-ready"
+import { markSplashReady, useSplashDocumentScrollLock } from "@/components/splash-ready"
 
 function SplashScreen({ children }: { children: React.ReactNode }) {
   const prefersReducedMotion = useReducedMotion()
   const [isVisible, setIsVisible] = React.useState(true)
+  const [scrollLocked, setScrollLocked] = React.useState(true)
   const [progress, setProgress] = React.useState(0)
+
+  useSplashDocumentScrollLock(scrollLocked)
 
   React.useEffect(() => {
     const duration = prefersReducedMotion ? 450 : 2200
@@ -35,7 +38,12 @@ function SplashScreen({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <AnimatePresence mode="wait">
+      <AnimatePresence
+        mode="wait"
+        onExitComplete={() => {
+          setScrollLocked(false)
+        }}
+      >
         {isVisible ? (
           <motion.div
             aria-live="polite"
