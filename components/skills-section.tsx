@@ -52,7 +52,10 @@ function SkillsSection() {
             <span className="shrink-0 font-mono text-[0.65rem] font-medium uppercase tracking-[0.22em] text-muted-foreground">
               Stack map
             </span>
-            <span className="h-px min-w-8 flex-1 bg-gradient-to-r from-border via-border/80 to-transparent" aria-hidden />
+            <span
+              className="h-px min-w-8 flex-1 bg-linear-to-r from-border via-border/70 to-transparent"
+              aria-hidden
+            />
           </div>
           <div className="space-y-3">
             <h2 id="skills-heading" className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
@@ -82,15 +85,15 @@ function SkillsSection() {
                 key={group.title}
                 variants={rowVariants}
                 transition={{ delay: 0.04 * index }}
-                className="grid gap-6 border-b border-border/35 py-9 last:border-b-0 sm:gap-8 sm:py-10 lg:grid-cols-[auto_minmax(0,12rem)_minmax(0,1fr)] lg:items-start lg:gap-x-10 lg:gap-y-2 lg:py-11"
+                className="grid gap-5 border-b border-border/35 py-9 last:border-b-0 sm:gap-6 sm:py-10 lg:grid-cols-[2.25rem_minmax(0,16rem)_minmax(0,1fr)] lg:items-start lg:gap-x-10 lg:gap-y-0 lg:py-11"
               >
                 <span
-                  className="font-mono text-xs tabular-nums tracking-widest text-muted-foreground/60 lg:pt-1"
+                  className="hidden font-mono text-xs tabular-nums tracking-widest text-muted-foreground/55 lg:block lg:pt-1"
                   aria-hidden
                 >
                   {indexLabel}
                 </span>
-                <div className="flex min-w-0 flex-col gap-3 lg:max-w-none">
+                <div className="flex min-w-0 flex-col gap-3">
                   <div className="flex items-center gap-3">
                     <Icon weight="regular" className="size-5 shrink-0 text-primary sm:size-6" aria-hidden />
                     <h3 className="font-heading text-lg font-semibold tracking-tight text-foreground sm:text-xl">
@@ -101,12 +104,20 @@ function SkillsSection() {
                     {group.blurb}
                   </p>
                 </div>
-                <div className="min-w-0 lg:pt-1">
-                  <p className="text-pretty text-sm leading-7 text-foreground/90 sm:text-base sm:leading-8">
-                    <span className="sr-only">{group.title} technologies: </span>
-                    {group.skills.join(" · ")}
-                  </p>
-                </div>
+                <ul
+                  className="grid min-w-0 list-none grid-cols-1 gap-x-8 gap-y-2 sm:grid-cols-2 sm:gap-y-2.5 lg:pt-1"
+                  aria-label={`${group.title} technologies`}
+                >
+                  {group.skills.map((skill) => (
+                    <li key={skill} className="flex items-baseline gap-2.5 text-[0.9375rem] leading-snug text-foreground/90 sm:text-base">
+                      <span
+                        aria-hidden
+                        className="mt-[0.55em] size-1.5 shrink-0 rounded-full bg-primary/75 ring-2 ring-primary/15"
+                      />
+                      <span className="min-w-0">{skill}</span>
+                    </li>
+                  ))}
+                </ul>
               </motion.article>
             )
           })}

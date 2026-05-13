@@ -8,30 +8,67 @@ export type SkillGroup = {
   skills: readonly string[]
 }
 
-/** Grouped skills aligned with the public résumé PDF — edit here to stay in sync. */
+/** Grouped skills — keep aligned with your public résumé PDF when you update it. */
 export const skillGroups: readonly SkillGroup[] = [
   {
     title: "Frontend",
     blurb: "Interfaces, design systems, and web performance.",
     Icon: Code,
-    skills: ["React", "Next.js", "TypeScript", "React Native", "Tailwind CSS", "SEO"],
+    skills: [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "React Native",
+      "Tailwind CSS",
+      "TanStack Query",
+      "Zustand",
+      "Redux Toolkit",
+      "Zod",
+      "SEO",
+    ],
   },
   {
     title: "Backend",
     blurb: "APIs, services, and integration layers.",
     Icon: Cpu,
-    skills: ["Node.js", "NestJS", "Express.js", "REST", "GraphQL", "WebSockets"],
+    skills: [
+      "Node.js",
+      "NestJS",
+      "Express.js",
+      "REST",
+      "GraphQL",
+      "WebSockets",
+      "tRPC",
+      "OpenAPI / Swagger",
+      "Jest",
+    ],
   },
   {
     title: "Data",
     blurb: "Persistence, modeling, and data access.",
     Icon: Database,
-    skills: ["PostgreSQL", "MongoDB", "MySQL", "Prisma", "Redis"],
+    skills: [
+      "PostgreSQL",
+      "MongoDB",
+      "MySQL",
+      "Prisma",
+      "Redis",
+      "Schema design & migrations",
+    ],
   },
   {
     title: "Platform & DevOps",
     blurb: "Shipping, observability, and cloud operations.",
     Icon: Cloud,
-    skills: ["Docker", "Kubernetes", "CI/CD", "Nginx", "AWS", "Azure", "Linux"],
+    skills: [
+      "Docker",
+      "Kubernetes",
+      "CI/CD",
+      "Nginx",
+      "AWS",
+      "Azure",
+      "Linux",
+      "Terraform",
+    ],
   },
 ]
