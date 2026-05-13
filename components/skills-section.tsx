@@ -1,6 +1,5 @@
 "use client"
 
-import { ArrowUpRight } from "@phosphor-icons/react"
 import { motion, type Variants } from "framer-motion"
 
 import { skillGroups } from "@/lib/skills-data"
@@ -47,7 +46,7 @@ function SkillsSection() {
         initial="hidden"
         animate={isSplashReady ? "visible" : "hidden"}
       >
-        <motion.div className="max-w-2xl space-y-6" variants={headerVariants}>
+        <motion.div className="max-w-3xl space-y-6" variants={headerVariants}>
           <div className="flex items-center gap-4">
             <span className="shrink-0 font-mono text-[0.65rem] font-medium uppercase tracking-[0.22em] text-muted-foreground">
               Stack map
@@ -57,21 +56,15 @@ function SkillsSection() {
               aria-hidden
             />
           </div>
-          <div className="space-y-3">
+          <div className="space-y-4 sm:space-y-5">
             <h2 id="skills-heading" className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
               Tools I ship with
             </h2>
-            <p className="text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg">
-              Grouped the way work actually lands—aligned with the roles and timeline in my{" "}
-              <a
-                href="/mohamed-elgedawy-fullStack.pdf"
-                className="inline-flex items-center gap-1 font-medium text-foreground underline decoration-primary/45 underline-offset-[5px] transition-colors hover:text-primary hover:decoration-primary"
-              >
-                résumé (PDF)
-                <ArrowUpRight weight="bold" className="size-4 shrink-0 text-primary/80" aria-hidden />
-              </a>
-              .
-            </p>
+            <div className="border-l-2 border-primary/35 pl-3 sm:pl-4">
+              <p className="text-pretty font-mono text-xs leading-relaxed tracking-wide text-muted-foreground sm:text-[0.8125rem] sm:leading-relaxed">
+                Production stack and tooling, grouped by domain—frontend through data and platform.
+              </p>
+            </div>
           </div>
         </motion.div>
 
@@ -105,16 +98,21 @@ function SkillsSection() {
                   </p>
                 </div>
                 <ul
-                  className="grid min-w-0 list-none grid-cols-1 gap-x-8 gap-y-2 sm:grid-cols-2 sm:gap-y-2.5 lg:pt-1"
+                  className="grid min-w-0 list-none grid-cols-1 gap-x-6 gap-y-2.5 md:grid-cols-3 md:gap-x-8 lg:pt-1"
                   aria-label={`${group.title} technologies`}
                 >
                   {group.skills.map((skill) => (
-                    <li key={skill} className="flex items-baseline gap-2.5 text-[0.9375rem] leading-snug text-foreground/90 sm:text-base">
-                      <span
-                        aria-hidden
-                        className="mt-[0.55em] size-1.5 shrink-0 rounded-full bg-primary/75 ring-2 ring-primary/15"
-                      />
-                      <span className="min-w-0">{skill}</span>
+                    <li
+                      key={skill}
+                      className="flex min-w-0 items-baseline gap-1 font-mono text-[0.8125rem] leading-snug sm:text-sm"
+                    >
+                      <span aria-hidden className="shrink-0 select-none text-primary/75">
+                        {"</ "}
+                      </span>
+                      <span className="min-w-0 font-sans text-[0.9375rem] text-foreground/90 sm:text-base">{skill}</span>
+                      <span aria-hidden className="shrink-0 select-none text-primary/75">
+                        {" >"}
+                      </span>
                     </li>
                   ))}
                 </ul>
