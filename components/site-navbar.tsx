@@ -148,7 +148,7 @@ function SiteNavbar() {
                 href={link.href}
                 onClick={handleNavClick}
                 aria-current={isActive ? "page" : undefined}
-                className="group relative isolate rounded-full px-2.5 py-1.5 font-mono text-xs text-muted-foreground outline-none transition-colors duration-200 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background data-[active=true]:text-foreground"
+                className="group relative isolate font-mono text-xs text-muted-foreground outline-none transition-colors duration-200 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background data-[active=true]:text-foreground"
                 data-active={isActive}
                 initial={{ opacity: 0, y: -6 }}
                 animate={
@@ -160,12 +160,12 @@ function SiteNavbar() {
               >
                 <span
                   aria-hidden
-                  className="absolute inset-0 -z-10 rounded-full bg-primary/8 opacity-0 shadow-[0_10px_30px_color-mix(in_oklch,var(--primary)_14%,transparent)] transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100 group-data-[active=true]:opacity-100"
+                  className="absolute -inset-x-1.5 -inset-y-1 -z-10 rounded-full bg-primary/8 opacity-0 shadow-[0_10px_30px_color-mix(in_oklch,var(--primary)_14%,transparent)] transition-[opacity,background-color] duration-200 group-hover:opacity-100 group-focus-visible:opacity-100 group-data-[active=true]:opacity-100 dark:bg-primary/16 dark:shadow-[0_10px_30px_color-mix(in_oklch,var(--primary)_22%,transparent)]"
                 />
                 <span className="relative z-10">{link.label}</span>
                 <span
                   aria-hidden
-                  className="absolute right-2.5 bottom-1 left-2.5 h-px origin-left scale-x-0 bg-linear-to-r from-primary via-foreground/70 to-transparent transition-transform duration-300 ease-out group-hover:scale-x-100 group-focus-visible:scale-x-100 group-data-[active=true]:scale-x-100"
+                  className="absolute right-0 -bottom-0.5 left-0 h-px origin-left scale-x-0 bg-linear-to-r from-primary via-foreground/70 to-transparent transition-transform duration-300 ease-out group-hover:scale-x-100 group-focus-visible:scale-x-100 group-data-[active=true]:scale-x-100"
                 />
               </motion.a>
             )
@@ -198,10 +198,18 @@ function SiteNavbar() {
           </button>
           <a
             href="/mohamed-elgedawy-fullStack.pdf"
-            className="hidden h-8 items-center gap-2 border border-border/60 px-3 font-mono text-xs text-foreground transition-colors hover:border-primary/50 hover:text-primary sm:inline-flex"
+            download="mohamed-elgedawy-fullStack.pdf"
+            className="group hidden h-8 items-center gap-1.5 font-mono text-xs text-muted-foreground transition-colors duration-200 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none sm:inline-flex"
           >
-            <DownloadSimple weight="bold" className="size-3.5" />
-            resume
+            <span className="text-primary transition-colors duration-200 group-hover:text-foreground">
+              $
+            </span>
+            <span>cat</span>
+            <span className="text-primary">~/resume.pdf</span>
+            <DownloadSimple
+              weight="bold"
+              className="ml-1 size-3.5 text-primary transition-transform duration-200 group-hover:translate-y-0.5"
+            />
           </a>
         </div>
       </motion.nav>

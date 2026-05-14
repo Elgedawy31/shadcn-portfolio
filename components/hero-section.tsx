@@ -109,11 +109,12 @@ const itemVariants: Variants = {
 }
 
 const headerVariants: Variants = {
-  hidden: { opacity: 0, y: 10 },
+  hidden: { opacity: 0, x: -18, filter: "blur(8px)" },
   visible: {
     opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+    x: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.65, ease: "easeOut" },
   },
 }
 
@@ -334,7 +335,8 @@ function HeroSection() {
         className="mt-14 space-y-8 sm:space-y-10"
         variants={containerVariants}
         initial="hidden"
-        animate={isSplashReady ? "visible" : "hidden"}
+        whileInView={isSplashReady ? "visible" : "hidden"}
+        viewport={{ once: true, amount: 0.18 }}
       >
         <motion.div
           className="max-w-3xl space-y-6 border-t border-border/70 pt-8 sm:pt-10"

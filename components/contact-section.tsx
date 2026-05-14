@@ -21,20 +21,22 @@ const containerVariants: Variants = {
 }
 
 const headerVariants: Variants = {
-  hidden: { opacity: 0, y: 10 },
+  hidden: { opacity: 0, x: -18, filter: "blur(8px)" },
   visible: {
     opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+    x: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.65, ease: "easeOut" },
   },
 }
 
 const columnVariants: Variants = {
-  hidden: { opacity: 0, y: 12 },
+  hidden: { opacity: 0, x: -18, filter: "blur(8px)" },
   visible: {
     opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+    x: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.65, ease: "easeOut" },
   },
 }
 
@@ -96,7 +98,8 @@ function ContactSection() {
         className="space-y-12 sm:space-y-14"
         variants={containerVariants}
         initial="hidden"
-        animate={isSplashReady ? "visible" : "hidden"}
+        whileInView={isSplashReady ? "visible" : "hidden"}
+        viewport={{ once: true, amount: 0.18 }}
       >
         <motion.div className="max-w-3xl space-y-6" variants={headerVariants}>
           <div className="flex items-center gap-4">
