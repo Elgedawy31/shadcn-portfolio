@@ -15,6 +15,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import type { ProjectEntry } from "@/lib/projects-data"
 import { projectEntries } from "@/lib/projects-data"
 
 const containerVariants: Variants = {
@@ -44,11 +45,18 @@ const cardVariants: Variants = {
   },
 }
 
-function ProjectPreview({ index, title }: { index: number; title: string }) {
-  if (title === "Auto Power") {
-    return <AutoPowerPreview />
+function ProjectPreview({
+  index,
+  project,
+}: {
+  index: number
+  project: ProjectEntry
+}) {
+  if (project.imageSrc) {
+    return <ImageProjectPreview project={project} />
   }
 
+  const title = project.title
   const rows = ["w-4/5", "w-2/3", "w-3/5"]
   const tiles = index === 0 ? 5 : index === 1 ? 4 : 6
 
@@ -117,12 +125,12 @@ function ProjectPreview({ index, title }: { index: number; title: string }) {
   )
 }
 
-function AutoPowerPreview() {
+function ImageProjectPreview({ project }: { project: ProjectEntry }) {
   return (
     <div className="relative h-full min-h-[19rem] overflow-hidden bg-[#ececec] sm:min-h-[22rem]">
       <Image
-        src="/projects/auto-power-showcase.png"
-        alt="Auto Power car dealership platform screenshot"
+        src={project.imageSrc ?? ""}
+        alt={project.imageAlt ?? `${project.title} project screenshot`}
         fill
         sizes="(min-width: 1280px) 50vw, 100vw"
         className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.07]"
@@ -191,7 +199,7 @@ function ProjectsSection() {
                     className="group relative flex min-h-full cursor-pointer flex-col overflow-hidden rounded-2xl border border-border/55 bg-background/88 text-left shadow-sm ring-1 ring-border/20 backdrop-blur-sm focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
                   >
                     <div className="relative border-b border-border/45">
-                      <ProjectPreview index={index} title={project.title} />
+                      <ProjectPreview index={index} project={project} />
                     </div>
 
                     <div className="flex flex-col gap-5 p-5 sm:p-6">
@@ -211,7 +219,7 @@ function ProjectsSection() {
                         </div>
                         <div className="flex shrink-0 items-center gap-3">
                           <span className="hidden font-mono text-[0.68rem] tracking-[0.14em] text-primary uppercase sm:inline-flex">
-                            Details
+                            {project.status}
                           </span>
                           <div className="grid size-11 place-items-center rounded-full border border-border/55 bg-muted/20">
                             <ArrowUpRight
@@ -248,17 +256,20 @@ function ProjectsSection() {
                     </DialogClose>
 
                     <div className="relative min-h-[13rem] overflow-hidden bg-muted/20 sm:min-h-[17rem] lg:min-h-[19rem]">
-                      {project.title === "Auto Power" ? (
+                      {project.imageSrc ? (
                         <Image
-                          src="/projects/auto-power-showcase.png"
-                          alt="Auto Power car dealership platform screenshot"
+                          src={project.imageSrc}
+                          alt={
+                            project.imageAlt ??
+                            `${project.title} project screenshot`
+                          }
                           fill
                           sizes="(min-width: 1024px) 58rem, 100vw"
                           className="object-cover object-top"
                           priority={false}
                         />
                       ) : (
-                        <ProjectPreview index={index} title={project.title} />
+                        <ProjectPreview index={index} project={project} />
                       )}
                       <div
                         aria-hidden
@@ -303,6 +314,18 @@ function ProjectsSection() {
                             ))}
                           </div>
                         </div>
+
+                        {project.liveUrl ? (
+                          <a
+                            href={project.liveUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex w-fit items-center gap-2 border border-white/16 bg-white/[0.06] px-4 py-2.5 font-mono text-xs text-white/82 transition-colors hover:bg-white/10"
+                          >
+                            Live Preview
+                            <ArrowUpRight weight="bold" className="size-3.5" />
+                          </a>
+                        ) : null}
                       </DialogHeader>
 
                       <aside className="space-y-6 border-t border-white/10 pt-6 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-8">
