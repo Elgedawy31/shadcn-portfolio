@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowUpRight } from "@phosphor-icons/react"
+import { ArrowUpRight, X } from "@phosphor-icons/react"
 import { motion, type Variants } from "framer-motion"
 import Image from "next/image"
 
@@ -8,6 +8,7 @@ import { useSplashReady } from "@/components/splash-ready"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -236,68 +237,94 @@ function ProjectsSection() {
                   </motion.button>
                 </DialogTrigger>
 
-                <DialogContent className="overflow-y-auto p-0">
-                  <div className="grid lg:grid-cols-[minmax(0,1.12fr)_minmax(23rem,0.88fr)]">
-                    <div className="relative min-h-[18rem] border-b border-border/55 bg-muted/20 lg:min-h-[34rem] lg:border-r lg:border-b-0">
+                <DialogContent
+                  showCloseButton={false}
+                  className="max-w-[min(58rem,calc(100vw-2rem))] overflow-y-auto rounded-2xl border-white/10 bg-[#0b0b0b] p-0 text-white shadow-[0_24px_100px_rgba(0,0,0,0.58)] ring-1 ring-white/10"
+                >
+                  <div className="relative overflow-hidden">
+                    <DialogClose className="absolute top-3 right-3 z-20 grid size-10 place-items-center rounded-full border border-white/15 bg-black/55 text-white/75 shadow-xl backdrop-blur-md transition-colors hover:bg-white/15 hover:text-white focus-visible:ring-2 focus-visible:ring-white/45 focus-visible:outline-none">
+                      <X weight="bold" className="size-4" />
+                      <span className="sr-only">Close</span>
+                    </DialogClose>
+
+                    <div className="relative min-h-[13rem] overflow-hidden bg-muted/20 sm:min-h-[17rem] lg:min-h-[19rem]">
                       {project.title === "Auto Power" ? (
                         <Image
                           src="/projects/auto-power-showcase.png"
                           alt="Auto Power car dealership platform screenshot"
                           fill
-                          sizes="(min-width: 1024px) 58vw, 100vw"
-                          className="object-contain"
+                          sizes="(min-width: 1024px) 58rem, 100vw"
+                          className="object-cover object-top"
                           priority={false}
                         />
                       ) : (
                         <ProjectPreview index={index} title={project.title} />
                       )}
+                      <div
+                        aria-hidden
+                        className="absolute inset-0 bg-linear-to-b from-transparent via-black/12 to-[#0b0b0b]"
+                      />
+                      <span
+                        aria-hidden
+                        className="absolute right-7 bottom-3 hidden font-heading text-7xl font-semibold tracking-tighter text-white/8 sm:block"
+                      >
+                        {projectNumber}
+                      </span>
                     </div>
 
-                    <div className="space-y-7 p-6 sm:p-8">
-                      <DialogHeader>
-                        <p className="font-mono text-[0.68rem] tracking-[0.16em] text-muted-foreground uppercase">
+                    <div className="grid gap-7 p-6 sm:p-8 lg:grid-cols-[minmax(0,1fr)_16rem] lg:gap-8">
+                      <DialogHeader className="gap-4">
+                        <p className="w-fit border-b border-primary/60 pb-1 font-mono text-[0.68rem] tracking-[0.16em] text-white/64 uppercase">
                           {project.category}
                         </p>
-                        <DialogTitle>{project.title}</DialogTitle>
-                        <DialogDescription>{project.summary}</DialogDescription>
+                        <DialogTitle className="text-3xl text-white sm:text-4xl">
+                          {project.title}
+                        </DialogTitle>
+                        <DialogDescription className="text-sm leading-7 text-white/62 sm:text-base sm:leading-8">
+                          {project.summary}
+                        </DialogDescription>
+
+                        <p className="border-l border-primary/45 pl-4 font-mono text-xs leading-relaxed text-pretty text-white/70">
+                          {project.impact}
+                        </p>
+
+                        <div className="space-y-3 pt-2">
+                          <p className="font-mono text-[0.65rem] tracking-[0.22em] text-white/38 uppercase">
+                            Stack
+                          </p>
+                          <div className="flex flex-wrap gap-2">
+                            {project.tags.map((tag) => (
+                              <span
+                                key={tag}
+                                className="border border-white/12 bg-white/[0.06] px-2.5 py-1.5 font-mono text-[0.68rem] text-white/72"
+                              >
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
                       </DialogHeader>
 
-                      <p className="border-l border-primary/35 pl-3 font-mono text-xs leading-relaxed text-pretty text-foreground/80">
-                        {project.impact}
-                      </p>
-
-                      <div className="space-y-3">
-                        <p className="font-mono text-[0.65rem] tracking-[0.16em] text-muted-foreground uppercase">
-                          Delivery notes
-                        </p>
-                        <ul className="space-y-2.5 border-t border-border/35 pt-4">
-                          {project.highlights.map((item) => (
-                            <li
-                              key={item}
-                              className="flex gap-2.5 text-sm leading-relaxed text-muted-foreground"
-                            >
-                              <span
-                                className="mt-2 size-1 shrink-0 rounded-full bg-primary/70"
-                                aria-hidden
-                              />
-                              <span className="min-w-0 text-foreground/85">
-                                {item}
-                              </span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      <div className="flex flex-wrap gap-2">
-                        {project.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="border border-border/55 bg-muted/15 px-2.5 py-1 font-mono text-[0.65rem] text-muted-foreground"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
+                      <aside className="space-y-6 border-t border-white/10 pt-6 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-8">
+                        <div className="space-y-3">
+                          <p className="font-mono text-[0.65rem] tracking-[0.22em] text-white/38 uppercase">
+                            Features
+                          </p>
+                          <ol className="space-y-3">
+                            {project.highlights.map((item, itemIndex) => (
+                              <li
+                                key={item}
+                                className="grid grid-cols-[1.6rem_minmax(0,1fr)] gap-3 text-sm leading-relaxed text-white/70"
+                              >
+                                <span className="font-mono text-[0.68rem] text-primary/85 tabular-nums">
+                                  {String(itemIndex + 1).padStart(2, "0")}
+                                </span>
+                                <span className="min-w-0">{item}</span>
+                              </li>
+                            ))}
+                          </ol>
+                        </div>
+                      </aside>
                     </div>
                   </div>
                 </DialogContent>
