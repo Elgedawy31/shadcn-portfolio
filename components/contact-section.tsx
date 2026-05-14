@@ -21,17 +21,17 @@ const containerVariants: Variants = {
 }
 
 const headerVariants: Variants = {
-  hidden: { opacity: 0, x: -18, filter: "blur(8px)" },
+  hidden: { opacity: 0, y: 28, filter: "blur(8px)" },
   visible: {
     opacity: 1,
-    x: 0,
+    y: 0,
     filter: "blur(0px)",
     transition: { duration: 0.65, ease: "easeOut" },
   },
 }
 
 const columnVariants: Variants = {
-  hidden: { opacity: 0, x: -18, filter: "blur(8px)" },
+  hidden: { opacity: 0, x: 28, filter: "blur(8px)" },
   visible: {
     opacity: 1,
     x: 0,

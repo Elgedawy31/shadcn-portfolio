@@ -3,6 +3,7 @@ import { ExperienceSection } from "@/components/experience-section"
 import { HeroSection } from "@/components/hero-section"
 import { HomeAmbientBackground } from "@/components/home-ambient-background"
 import { ProjectsSection } from "@/components/projects-section"
+import { ScrollToTopOnRefresh } from "@/components/scroll-to-top-on-refresh"
 import { SkillsSection } from "@/components/skills-section"
 import { SiteNavbar } from "@/components/site-navbar"
 
@@ -12,6 +13,7 @@ export default function Page() {
       id="home"
       className="relative min-h-svh overflow-x-clip bg-background"
     >
+      <ScrollToTopOnRefresh />
       <HomeAmbientBackground />
       <div className="relative z-10">
         <SiteNavbar />

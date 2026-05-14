@@ -19,7 +19,7 @@ const containerVariants: Variants = {
 }
 
 const headerVariants: Variants = {
-  hidden: { opacity: 0, x: -18, filter: "blur(8px)" },
+  hidden: { opacity: 0, x: 28, filter: "blur(8px)" },
   visible: {
     opacity: 1,
     x: 0,
@@ -29,7 +29,7 @@ const headerVariants: Variants = {
 }
 
 const rowVariants: Variants = {
-  hidden: { opacity: 0, x: -18, filter: "blur(8px)" },
+  hidden: { opacity: 0, x: -26, filter: "blur(8px)" },
   visible: {
     opacity: 1,
     x: 0,
