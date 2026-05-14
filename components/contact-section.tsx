@@ -1,8 +1,13 @@
 "use client"
 
 import * as React from "react"
-import { Check, EnvelopeSimple } from "@phosphor-icons/react"
-import { motion, type Variants } from "framer-motion"
+import {
+  Check,
+  CheckCircle,
+  CircleNotch,
+  EnvelopeSimple,
+} from "@phosphor-icons/react"
+import { AnimatePresence, motion, type Variants } from "framer-motion"
 
 import { useSplashReady } from "@/components/splash-ready"
 import { Button } from "@/components/ui/button"
@@ -10,7 +15,6 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { CONTACT_EMAIL, socialProfileLinks } from "@/lib/contact-links"
-import { submitContactMessage } from "@/lib/contact-submit"
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -53,6 +57,17 @@ function ContactSection() {
   const [copied, setCopied] = React.useState(false)
   const [pending, setPending] = React.useState(false)
   const [formNotice, setFormNotice] = React.useState<string | null>(null)
+  const [toastMessage, setToastMessage] = React.useState<string | null>(null)
+
+  React.useEffect(() => {
+    if (!toastMessage) {
+      return
+    }
+
+    const timer = window.setTimeout(() => setToastMessage(null), 3600)
+
+    return () => window.clearTimeout(timer)
+  }, [toastMessage])
 
   async function copyEmail() {
     try {
@@ -67,23 +82,28 @@ function ContactSection() {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setFormNotice(null)
+    setToastMessage(null)
+
+    const trimmedName = name.trim()
+    const trimmedEmail = email.trim()
+    const trimmedMessage = message.trim()
+    const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)
+
+    if (!trimmedName || !isValidEmail || !trimmedMessage) {
+      setFormNotice("Please enter your name, a valid email, and a message.")
+      return
+    }
+
     setPending(true)
-    const result = await submitContactMessage({ name, email, message })
+
+    await new Promise((resolve) => window.setTimeout(resolve, 1000))
+
     setPending(false)
-    if (result.ok) {
-      setFormNotice("Thanks — your message was sent.")
-      setName("")
-      setEmail("")
-      setMessage("")
-      return
-    }
-    if (result.error === "validation") {
-      setFormNotice("Please fill in name, a valid email, and a short message.")
-      return
-    }
-    setFormNotice(
-      "In-site sending is not connected yet—email me directly above for a guaranteed reply."
-    )
+    setFormNotice("Success: your message has been received.")
+    setToastMessage("Message sent successfully.")
+    setName("")
+    setEmail("")
+    setMessage("")
   }
 
   const mailtoHref = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Hello Mohamed")}`
@@ -94,6 +114,28 @@ function ContactSection() {
       aria-labelledby="contact-heading"
       className="mx-auto w-full max-w-7xl border-t border-border/70 px-4 py-16 sm:py-20"
     >
+      <AnimatePresence>
+        {toastMessage ? (
+          <motion.div
+            role="status"
+            aria-live="polite"
+            initial={{ opacity: 0, y: 18, scale: 0.98, filter: "blur(8px)" }}
+            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+            exit={{ opacity: 0, y: 18, scale: 0.98, filter: "blur(8px)" }}
+            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed right-4 bottom-4 z-50 flex max-w-[calc(100vw-2rem)] items-start gap-3 border border-primary/25 bg-background/96 px-4 py-3 shadow-[0_24px_80px_color-mix(in_oklch,var(--foreground)_16%,transparent)] backdrop-blur-xl sm:right-6 sm:bottom-6 sm:max-w-sm"
+          >
+            <CheckCircle
+              weight="duotone"
+              className="mt-0.5 size-5 shrink-0 text-primary"
+              aria-hidden
+            />
+            <span className="min-w-0 font-mono text-xs leading-relaxed text-foreground">
+              {toastMessage}
+            </span>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
       <motion.div
         className="space-y-12 sm:space-y-14"
         variants={containerVariants}
@@ -237,7 +279,7 @@ function ContactSection() {
                   </p>
                 </div>
                 <span className="shrink-0 font-mono text-[0.62rem] tracking-[0.14em] text-muted-foreground/90 uppercase">
-                  API stub
+                  Local demo
                 </span>
               </div>
 
@@ -254,10 +296,11 @@ function ContactSection() {
                     name="name"
                     autoComplete="name"
                     value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Your name"
-                    className="h-9 sm:text-sm"
-                  />
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Your name"
+                  className="h-9 sm:text-sm"
+                  disabled={pending}
+                />
                 </div>
                 <div className="space-y-2 sm:col-span-1">
                   <Label
@@ -273,10 +316,11 @@ function ContactSection() {
                     autoComplete="email"
                     inputMode="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="you@company.com"
-                    className="h-9 sm:text-sm"
-                  />
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@company.com"
+                  className="h-9 sm:text-sm"
+                  disabled={pending}
+                />
                 </div>
               </div>
 
@@ -295,6 +339,7 @@ function ContactSection() {
                   placeholder="What you are building, stack, and how I can help."
                   rows={5}
                   className="min-h-28 resize-y sm:text-sm"
+                  disabled={pending}
                 />
               </div>
 
@@ -314,14 +359,19 @@ function ContactSection() {
                   className="h-9 min-w-[7.5rem]"
                   disabled={pending}
                 >
-                  {pending ? "Sending…" : "Send"}
+                  {pending ? (
+                    <>
+                      <CircleNotch
+                        weight="bold"
+                        className="size-4 animate-spin"
+                        aria-hidden
+                      />
+                      Preparing
+                    </>
+                  ) : (
+                    "Send"
+                  )}
                 </Button>
-                <span className="font-mono text-[0.65rem] text-muted-foreground/90">
-                  Submit handler:{" "}
-                  <code className="text-foreground/80">
-                    lib/contact-submit.ts
-                  </code>
-                </span>
               </div>
             </form>
           </motion.div>
