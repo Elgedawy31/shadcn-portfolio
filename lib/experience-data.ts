@@ -88,7 +88,10 @@ export const experienceEntries: readonly ExperienceEntry[] = [
   },
 ]
 
-const monthFormatter = new Intl.DateTimeFormat("en-US", { month: "short", year: "numeric" })
+const monthFormatter = new Intl.DateTimeFormat("en-US", {
+  month: "short",
+  year: "numeric",
+})
 
 function parseYearMonth(ym: string): Date {
   const [y, m] = ym.split("-").map(Number)

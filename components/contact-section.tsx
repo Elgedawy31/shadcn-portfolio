@@ -79,7 +79,9 @@ function ContactSection() {
       setFormNotice("Please fill in name, a valid email, and a short message.")
       return
     }
-    setFormNotice("In-site sending is not connected yet—email me directly above for a guaranteed reply.")
+    setFormNotice(
+      "In-site sending is not connected yet—email me directly above for a guaranteed reply."
+    )
   }
 
   const mailtoHref = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Hello Mohamed")}`
@@ -98,7 +100,7 @@ function ContactSection() {
       >
         <motion.div className="max-w-3xl space-y-6" variants={headerVariants}>
           <div className="flex items-center gap-4">
-            <span className="shrink-0 font-mono text-[0.65rem] font-medium uppercase tracking-[0.22em] text-muted-foreground">
+            <span className="shrink-0 font-mono text-[0.65rem] font-medium tracking-[0.22em] text-muted-foreground uppercase">
               Open channels
             </span>
             <span
@@ -114,9 +116,10 @@ function ContactSection() {
               Let&apos;s build something solid
             </h2>
             <div className="border-l-2 border-primary/35 pl-3 sm:pl-4">
-              <p className="text-pretty font-mono text-xs leading-relaxed tracking-wide text-muted-foreground sm:text-[0.8125rem] sm:leading-relaxed">
-                Email is the fastest line in—profiles below for context. The form is ready to plug into an API when
-                you want hosted submissions.
+              <p className="font-mono text-xs leading-relaxed tracking-wide text-pretty text-muted-foreground sm:text-[0.8125rem] sm:leading-relaxed">
+                Email is the fastest line in—profiles below for context. The
+                form is ready to plug into an API when you want hosted
+                submissions.
               </p>
             </div>
           </div>
@@ -125,22 +128,26 @@ function ContactSection() {
         <div className="grid gap-10 border-t border-border/50 pt-10 lg:grid-cols-12 lg:gap-12 lg:pt-12">
           <motion.div
             variants={columnVariants}
-            className="flex flex-col gap-8 lg:col-span-4 lg:sticky lg:top-24 lg:self-start xl:top-28"
+            className="flex flex-col gap-8 lg:sticky lg:top-24 lg:col-span-4 lg:self-start xl:top-28"
           >
             <div className="space-y-4">
-              <p className="font-mono text-[0.65rem] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+              <p className="font-mono text-[0.65rem] font-medium tracking-[0.2em] text-muted-foreground uppercase">
                 Direct
               </p>
               <a
                 href={mailtoHref}
-                className="block w-fit max-w-full break-all font-mono text-sm leading-snug text-foreground underline-offset-4 transition-colors hover:text-primary hover:underline sm:text-base"
+                className="block w-fit max-w-full font-mono text-sm leading-snug break-all text-foreground underline-offset-4 transition-colors hover:text-primary hover:underline sm:text-base"
               >
                 {CONTACT_EMAIL}
               </a>
               <div className="flex flex-wrap gap-2">
                 <Button asChild size="lg" className="h-9">
                   <a href={mailtoHref}>
-                    <EnvelopeSimple weight="duotone" className="size-4" aria-hidden />
+                    <EnvelopeSimple
+                      weight="duotone"
+                      className="size-4"
+                      aria-hidden
+                    />
                     Compose
                   </a>
                 </Button>
@@ -155,7 +162,11 @@ function ContactSection() {
                 >
                   {copied ? (
                     <>
-                      <Check weight="bold" className="size-4 text-primary" aria-hidden />
+                      <Check
+                        weight="bold"
+                        className="size-4 text-primary"
+                        aria-hidden
+                      />
                       Copied
                     </>
                   ) : (
@@ -165,10 +176,13 @@ function ContactSection() {
               </div>
             </div>
 
-            <div className="h-px w-full bg-linear-to-r from-border via-border/60 to-transparent" aria-hidden />
+            <div
+              className="h-px w-full bg-linear-to-r from-border via-border/60 to-transparent"
+              aria-hidden
+            />
 
             <div className="space-y-3">
-              <p className="font-mono text-[0.65rem] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+              <p className="font-mono text-[0.65rem] font-medium tracking-[0.2em] text-muted-foreground uppercase">
                 Profiles
               </p>
               <nav aria-label="Social profiles" className="flex flex-col gap-1">
@@ -197,7 +211,10 @@ function ContactSection() {
             </div>
           </motion.div>
 
-          <motion.div variants={columnVariants} className="min-w-0 lg:col-span-8">
+          <motion.div
+            variants={columnVariants}
+            className="min-w-0 lg:col-span-8"
+          >
             <form
               onSubmit={(e) => {
                 void handleSubmit(e)
@@ -211,18 +228,22 @@ function ContactSection() {
                   <h3 className="font-heading text-lg font-semibold tracking-tight text-foreground sm:text-xl">
                     Send a message
                   </h3>
-                  <p className="mt-1 max-w-md text-pretty text-xs leading-relaxed text-muted-foreground sm:text-sm">
-                    Intro, scope, and timeline—I will respond from the address on the left.
+                  <p className="mt-1 max-w-md text-xs leading-relaxed text-pretty text-muted-foreground sm:text-sm">
+                    Intro, scope, and timeline—I will respond from the address
+                    on the left.
                   </p>
                 </div>
-                <span className="shrink-0 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-muted-foreground/90">
+                <span className="shrink-0 font-mono text-[0.62rem] tracking-[0.14em] text-muted-foreground/90 uppercase">
                   API stub
                 </span>
               </div>
 
               <div className="grid gap-5 sm:grid-cols-2">
                 <div className="space-y-2 sm:col-span-1">
-                  <Label htmlFor={nameId} className="font-mono text-[0.65rem] uppercase tracking-wider text-muted-foreground">
+                  <Label
+                    htmlFor={nameId}
+                    className="font-mono text-[0.65rem] tracking-wider text-muted-foreground uppercase"
+                  >
                     Name
                   </Label>
                   <Input
@@ -236,7 +257,10 @@ function ContactSection() {
                   />
                 </div>
                 <div className="space-y-2 sm:col-span-1">
-                  <Label htmlFor={emailId} className="font-mono text-[0.65rem] uppercase tracking-wider text-muted-foreground">
+                  <Label
+                    htmlFor={emailId}
+                    className="font-mono text-[0.65rem] tracking-wider text-muted-foreground uppercase"
+                  >
                     Email
                   </Label>
                   <Input
@@ -254,7 +278,10 @@ function ContactSection() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor={messageId} className="font-mono text-[0.65rem] uppercase tracking-wider text-muted-foreground">
+                <Label
+                  htmlFor={messageId}
+                  className="font-mono text-[0.65rem] tracking-wider text-muted-foreground uppercase"
+                >
                   Message
                 </Label>
                 <Textarea
@@ -271,18 +298,26 @@ function ContactSection() {
               {formNotice ? (
                 <p
                   role="status"
-                  className="text-pretty border border-border/60 bg-background/80 px-3 py-2 font-mono text-xs leading-relaxed text-muted-foreground sm:text-[0.8125rem]"
+                  className="border border-border/60 bg-background/80 px-3 py-2 font-mono text-xs leading-relaxed text-pretty text-muted-foreground sm:text-[0.8125rem]"
                 >
                   {formNotice}
                 </p>
               ) : null}
 
               <div className="flex flex-wrap items-center gap-3 pt-1">
-                <Button type="submit" size="lg" className="h-9 min-w-[7.5rem]" disabled={pending}>
+                <Button
+                  type="submit"
+                  size="lg"
+                  className="h-9 min-w-[7.5rem]"
+                  disabled={pending}
+                >
                   {pending ? "Sending…" : "Send"}
                 </Button>
                 <span className="font-mono text-[0.65rem] text-muted-foreground/90">
-                  Submit handler: <code className="text-foreground/80">lib/contact-submit.ts</code>
+                  Submit handler:{" "}
+                  <code className="text-foreground/80">
+                    lib/contact-submit.ts
+                  </code>
                 </span>
               </div>
             </form>

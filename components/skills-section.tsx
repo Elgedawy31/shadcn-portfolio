@@ -48,7 +48,7 @@ function SkillsSection() {
       >
         <motion.div className="max-w-3xl space-y-6" variants={headerVariants}>
           <div className="flex items-center gap-4">
-            <span className="shrink-0 font-mono text-[0.65rem] font-medium uppercase tracking-[0.22em] text-muted-foreground">
+            <span className="shrink-0 font-mono text-[0.65rem] font-medium tracking-[0.22em] text-muted-foreground uppercase">
               Stack map
             </span>
             <span
@@ -64,8 +64,9 @@ function SkillsSection() {
               Tools I ship with
             </h2>
             <div className="border-l-2 border-primary/35 pl-3 sm:pl-4">
-              <p className="text-pretty font-mono text-xs leading-relaxed tracking-wide text-muted-foreground sm:text-[0.8125rem] sm:leading-relaxed">
-                Production stack and tooling, grouped by domain—frontend through data and platform.
+              <p className="font-mono text-xs leading-relaxed tracking-wide text-pretty text-muted-foreground sm:text-[0.8125rem] sm:leading-relaxed">
+                Production stack and tooling, grouped by domain—frontend through
+                data and platform.
               </p>
             </div>
           </div>
@@ -84,19 +85,23 @@ function SkillsSection() {
                 className="grid gap-5 border-b border-border/35 py-9 last:border-b-0 sm:gap-6 sm:py-10 lg:grid-cols-[2.25rem_minmax(0,16rem)_minmax(0,1fr)] lg:items-start lg:gap-x-10 lg:gap-y-0 lg:py-11"
               >
                 <span
-                  className="hidden font-mono text-xs tabular-nums tracking-widest text-muted-foreground/55 lg:block lg:pt-1"
+                  className="hidden font-mono text-xs tracking-widest text-muted-foreground/55 tabular-nums lg:block lg:pt-1"
                   aria-hidden
                 >
                   {indexLabel}
                 </span>
                 <div className="flex min-w-0 flex-col gap-3">
                   <div className="flex items-center gap-3">
-                    <Icon weight="regular" className="size-5 shrink-0 text-primary sm:size-6" aria-hidden />
+                    <Icon
+                      weight="regular"
+                      className="size-5 shrink-0 text-primary sm:size-6"
+                      aria-hidden
+                    />
                     <h3 className="font-heading text-lg font-semibold tracking-tight text-foreground sm:text-xl">
                       {group.title}
                     </h3>
                   </div>
-                  <p className="max-w-prose text-pretty text-sm leading-relaxed text-muted-foreground sm:text-[0.9375rem]">
+                  <p className="max-w-prose text-sm leading-relaxed text-pretty text-muted-foreground sm:text-[0.9375rem]">
                     {group.blurb}
                   </p>
                 </div>
@@ -109,11 +114,19 @@ function SkillsSection() {
                       key={skill}
                       className="flex min-w-0 items-baseline gap-1 font-mono text-[0.8125rem] leading-snug sm:text-sm"
                     >
-                      <span aria-hidden className="shrink-0 select-none text-primary/75">
+                      <span
+                        aria-hidden
+                        className="shrink-0 text-primary/75 select-none"
+                      >
                         {"</ "}
                       </span>
-                      <span className="min-w-0 font-sans text-[0.9375rem] text-foreground/90 sm:text-base">{skill}</span>
-                      <span aria-hidden className="shrink-0 select-none text-primary/75">
+                      <span className="min-w-0 font-sans text-[0.9375rem] text-foreground/90 sm:text-base">
+                        {skill}
+                      </span>
+                      <span
+                        aria-hidden
+                        className="shrink-0 text-primary/75 select-none"
+                      >
                         {" >"}
                       </span>
                     </li>

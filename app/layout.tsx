@@ -222,7 +222,7 @@ export default function RootLayout({
         "font-sans antialiased",
         fontSans.variable,
         fontHeading.variable,
-        jetbrainsMono.variable,
+        jetbrainsMono.variable
       )}
     >
       <body>

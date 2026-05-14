@@ -25,7 +25,7 @@ function SiteNavbar() {
   const isMounted = React.useSyncExternalStore(
     subscribeToHydration,
     () => true,
-    () => false,
+    () => false
   )
   const isDark = isMounted && resolvedTheme === "dark"
 
@@ -46,7 +46,7 @@ function SiteNavbar() {
     >
       <motion.nav
         aria-label="Main navigation"
-        className="mx-auto grid max-w-7xl grid-cols-[1fr_auto_1fr] items-center gap-3 border border-border/50 bg-background px-3 py-2 "
+        className="mx-auto grid max-w-7xl grid-cols-[1fr_auto_1fr] items-center gap-3 border border-border/50 bg-background px-3 py-2"
       >
         <a
           href="#home"
@@ -63,7 +63,9 @@ function SiteNavbar() {
                 href={link.href}
                 className="font-mono text-xs text-muted-foreground transition-colors hover:text-foreground"
                 initial={{ opacity: 0, y: -6 }}
-                animate={isSplashReady ? { opacity: 1, y: 0 } : { opacity: 0, y: -6 }}
+                animate={
+                  isSplashReady ? { opacity: 1, y: 0 } : { opacity: 0, y: -6 }
+                }
                 transition={{ duration: 0.4, delay: 0.28 + index * 0.06 }}
               >
                 {link.label}
@@ -75,10 +77,14 @@ function SiteNavbar() {
         <div className="flex items-center justify-end gap-2">
           <button
             type="button"
-            aria-label={isMounted ? `Switch to ${isDark ? "light" : "dark"} theme` : "Toggle color theme"}
+            aria-label={
+              isMounted
+                ? `Switch to ${isDark ? "light" : "dark"} theme`
+                : "Toggle color theme"
+            }
             aria-pressed={isDark}
             onClick={toggleTheme}
-            className="group relative grid size-8 shrink-0 place-items-center rounded-full border border-border/40 bg-muted/25 text-muted-foreground shadow-sm ring-offset-background transition-[color,background-color,border-color,box-shadow,transform] duration-200 hover:border-primary/35 hover:bg-muted/45 hover:text-foreground hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:scale-[0.96]"
+            className="group relative grid size-8 shrink-0 place-items-center rounded-full border border-border/40 bg-muted/25 text-muted-foreground shadow-sm ring-offset-background transition-[color,background-color,border-color,box-shadow,transform] duration-200 hover:border-primary/35 hover:bg-muted/45 hover:text-foreground hover:shadow-md focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none active:scale-[0.96]"
           >
             {isDark ? (
               <Sun

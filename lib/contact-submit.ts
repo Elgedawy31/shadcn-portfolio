@@ -12,7 +12,9 @@ export type ContactSubmitResult =
  * Replace this with `fetch("/api/contact", { method: "POST", ... })` or a form provider URL.
  * Returns `not_configured` until you wire a backend.
  */
-export async function submitContactMessage(payload: ContactMessagePayload): Promise<ContactSubmitResult> {
+export async function submitContactMessage(
+  payload: ContactMessagePayload
+): Promise<ContactSubmitResult> {
   const name = payload.name.trim()
   const email = payload.email.trim()
   const message = payload.message.trim()

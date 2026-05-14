@@ -26,14 +26,22 @@ const terminalResponses: Record<string, string[]> = {
     "Mohamed Elgedawy",
     "Full Stack Engineer building scalable React, Next.js, Node.js, and cloud-ready products.",
   ],
-  skills: ["React / Next.js: 94%", "TypeScript: 90%", "Node / NestJS: 86%", "Docker / CI: 78%"],
+  skills: [
+    "React / Next.js: 94%",
+    "TypeScript: 90%",
+    "Node / NestJS: 86%",
+    "Docker / CI: 78%",
+  ],
   contact: [
     "email: mohamedelgedawy40@gmail.com",
     "linkedin: linkedin.com/in/mohamedelgedawy",
     "github: github.com/Elgedawy31",
   ],
   resume: ["resume: /mohamed-elgedawy-fullStack.pdf"],
-  status: ["open to new opportunities", "available for frontend, full-stack, and performance-focused product work"],
+  status: [
+    "open to new opportunities",
+    "available for frontend, full-stack, and performance-focused product work",
+  ],
 }
 
 const rightCardVariants: Variants = {
@@ -151,7 +159,10 @@ function LinuxWorkstation() {
         >
           <div className="mb-4 flex items-center justify-between">
             <div className="flex items-center gap-2 text-foreground">
-              <TerminalWindow weight="duotone" className="size-4 text-primary" />
+              <TerminalWindow
+                weight="duotone"
+                className="size-4 text-primary"
+              />
               <span>developer-profile</span>
             </div>
             <span className="border border-emerald-500/35 bg-emerald-500/10 px-2 py-1 text-emerald-500">
@@ -162,11 +173,15 @@ function LinuxWorkstation() {
             <p>
               <span className="text-primary">$</span> cat ./mohamed/summary.txt
             </p>
-            <p className="pl-4 text-foreground">Full Stack Engineer focused on production-ready web apps.</p>
+            <p className="pl-4 text-foreground">
+              Full Stack Engineer focused on production-ready web apps.
+            </p>
             <p>
               <span className="text-primary">$</span> grep --skills ./resume.md
             </p>
-            <p className="pl-4">React Next.js TypeScript Node.js NestJS Docker PostgreSQL SEO</p>
+            <p className="pl-4">
+              React Next.js TypeScript Node.js NestJS Docker PostgreSQL SEO
+            </p>
           </div>
         </motion.div>
 
@@ -214,7 +229,10 @@ function LinuxWorkstation() {
                       className="h-full bg-primary"
                       initial={{ width: 0 }}
                       animate={{ width: value }}
-                      transition={{ duration: 0.75, delay: 0.98 + index * 0.08 }}
+                      transition={{
+                        duration: 0.75,
+                        delay: 0.98 + index * 0.08,
+                      }}
                     />
                   </div>
                 </div>
@@ -232,7 +250,10 @@ function LinuxWorkstation() {
             <span>interactive-shell</span>
             <span className="text-muted-foreground">type help</span>
           </div>
-          <div ref={terminalOutputRef} className="max-h-40 space-y-3 overflow-y-auto pr-1 leading-6">
+          <div
+            ref={terminalOutputRef}
+            className="max-h-40 space-y-3 overflow-y-auto pr-1 leading-6"
+          >
             {history.map((entry, index) => (
               <div key={`${entry.command}-${index}`}>
                 <p className="text-foreground">
@@ -246,7 +267,10 @@ function LinuxWorkstation() {
               </div>
             ))}
           </div>
-          <form onSubmit={runCommand} className="mt-4 flex items-center gap-2 border-t border-border/70 pt-3">
+          <form
+            onSubmit={runCommand}
+            className="mt-4 flex items-center gap-2 border-t border-border/70 pt-3"
+          >
             <span className="text-primary">$</span>
             <input
               ref={terminalInputRef}

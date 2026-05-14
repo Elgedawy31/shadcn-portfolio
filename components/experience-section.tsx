@@ -4,7 +4,11 @@ import { Buildings } from "@phosphor-icons/react"
 import { motion, type Variants } from "framer-motion"
 
 import { useSplashReady } from "@/components/splash-ready"
-import { experienceEntries, formatMonthYear, yearMonthToDateAttr } from "@/lib/experience-data"
+import {
+  experienceEntries,
+  formatMonthYear,
+  yearMonthToDateAttr,
+} from "@/lib/experience-data"
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -49,7 +53,7 @@ function ExperienceSection() {
       >
         <motion.div className="max-w-3xl space-y-6" variants={headerVariants}>
           <div className="flex items-center gap-4">
-            <span className="shrink-0 font-mono text-[0.65rem] font-medium uppercase tracking-[0.22em] text-muted-foreground">
+            <span className="shrink-0 font-mono text-[0.65rem] font-medium tracking-[0.22em] text-muted-foreground uppercase">
               Career log
             </span>
             <span
@@ -65,8 +69,9 @@ function ExperienceSection() {
               Where I have shipped
             </h2>
             <div className="border-l-2 border-primary/35 pl-3 sm:pl-4">
-              <p className="text-pretty font-mono text-xs leading-relaxed tracking-wide text-muted-foreground sm:text-[0.8125rem] sm:leading-relaxed">
-                Production roles across product companies and independent delivery—frontend through platform.
+              <p className="font-mono text-xs leading-relaxed tracking-wide text-pretty text-muted-foreground sm:text-[0.8125rem] sm:leading-relaxed">
+                Production roles across product companies and independent
+                delivery—frontend through platform.
               </p>
             </div>
           </div>
@@ -74,7 +79,7 @@ function ExperienceSection() {
 
         <div className="relative w-full border-t border-border/50">
           <div
-            className="pointer-events-none absolute left-[0.55rem] top-0 hidden h-full w-px bg-border/60 sm:left-[0.65rem] lg:left-[5.35rem]"
+            className="pointer-events-none absolute top-0 left-[0.55rem] hidden h-full w-px bg-border/60 sm:left-[0.65rem] lg:left-[5.35rem]"
             aria-hidden
           />
 
@@ -92,7 +97,7 @@ function ExperienceSection() {
                   <article className="grid gap-6 lg:grid-cols-[minmax(0,7.5rem)_minmax(0,1fr)] lg:gap-x-10 xl:grid-cols-[minmax(0,9rem)_minmax(0,1fr)]">
                     <div className="flex items-start gap-3 lg:flex-col lg:gap-3">
                       <span
-                        className="mt-0.5 hidden font-mono text-xs tabular-nums tracking-widest text-muted-foreground/55 lg:block"
+                        className="mt-0.5 hidden font-mono text-xs tracking-widest text-muted-foreground/55 tabular-nums lg:block"
                         aria-hidden
                       >
                         {indexLabel}
@@ -103,14 +108,22 @@ function ExperienceSection() {
                           aria-hidden
                         />
                         <p className="font-mono text-[0.7rem] leading-snug tracking-wide text-muted-foreground sm:text-xs lg:pt-0.5">
-                          <time dateTime={yearMonthToDateAttr(entry.startLabel)}>
+                          <time
+                            dateTime={yearMonthToDateAttr(entry.startLabel)}
+                          >
                             {formatMonthYear(entry.startLabel)}
                           </time>
-                          <span className="text-muted-foreground/45">{" — "}</span>
+                          <span className="text-muted-foreground/45">
+                            {" — "}
+                          </span>
                           {entry.current || !entry.endLabel ? (
                             "Present"
                           ) : (
-                            <time dateTime={yearMonthToDateAttr(entry.endLabel)}>{formatMonthYear(entry.endLabel)}</time>
+                            <time
+                              dateTime={yearMonthToDateAttr(entry.endLabel)}
+                            >
+                              {formatMonthYear(entry.endLabel)}
+                            </time>
                           )}
                         </p>
                       </div>
@@ -127,13 +140,21 @@ function ExperienceSection() {
                           <h3 className="font-heading text-lg font-semibold tracking-tight text-foreground sm:text-xl">
                             {entry.title}
                           </h3>
-                          <p className="text-pretty font-mono text-[0.7rem] leading-relaxed text-muted-foreground sm:text-xs">
-                            <span className="text-foreground/90">{entry.company}</span>
-                            <span aria-hidden className="text-muted-foreground/50">
+                          <p className="font-mono text-[0.7rem] leading-relaxed text-pretty text-muted-foreground sm:text-xs">
+                            <span className="text-foreground/90">
+                              {entry.company}
+                            </span>
+                            <span
+                              aria-hidden
+                              className="text-muted-foreground/50"
+                            >
                               {" · "}
                             </span>
                             {entry.location}
-                            <span aria-hidden className="text-muted-foreground/50">
+                            <span
+                              aria-hidden
+                              className="text-muted-foreground/50"
+                            >
                               {" · "}
                             </span>
                             {entry.arrangement}
@@ -141,14 +162,19 @@ function ExperienceSection() {
                         </div>
                       </div>
 
-                      <ul className="space-y-2.5 text-pretty border-t border-border/35 pt-4 sm:space-y-3 sm:pt-5">
+                      <ul className="space-y-2.5 border-t border-border/35 pt-4 text-pretty sm:space-y-3 sm:pt-5">
                         {entry.highlights.map((item) => (
                           <li
                             key={item}
                             className="flex gap-2.5 text-sm leading-relaxed text-muted-foreground sm:text-[0.9375rem] sm:leading-relaxed"
                           >
-                            <span className="mt-2 size-1 shrink-0 rounded-full bg-primary/70" aria-hidden />
-                            <span className="min-w-0 text-foreground/85">{item}</span>
+                            <span
+                              className="mt-2 size-1 shrink-0 rounded-full bg-primary/70"
+                              aria-hidden
+                            />
+                            <span className="min-w-0 text-foreground/85">
+                              {item}
+                            </span>
                           </li>
                         ))}
                       </ul>

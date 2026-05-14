@@ -1,7 +1,8 @@
 import type { Icon } from "@phosphor-icons/react"
-import { GithubLogo, LinkedinLogo } from "@phosphor-icons/react"
+import { GithubLogo, LinkedinLogo, WhatsappLogo } from "@phosphor-icons/react"
 
 export const CONTACT_EMAIL = "mohamedelgedawy40@gmail.com" as const
+export const WHATSAPP_URL = "https://wa.me/201003098950" as const
 
 export type SocialProfileLink = {
   id: string
@@ -23,5 +24,11 @@ export const socialProfileLinks: readonly SocialProfileLink[] = [
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/mohamedelgedawy",
     Icon: LinkedinLogo,
+  },
+  {
+    id: "whatsapp",
+    label: "WhatsApp",
+    href: WHATSAPP_URL,
+    Icon: WhatsappLogo,
   },
 ]
