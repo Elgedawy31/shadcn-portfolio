@@ -22,7 +22,7 @@ export const socialProfileLinks: readonly SocialProfileLink[] = [
   {
     id: "linkedin",
     label: "LinkedIn",
-    href: "https://www.linkedin.com/in/mohamedelgedawy",
+    href: "https://www.linkedin.com/in/mohamed-elgedawy-780500242/",
     Icon: LinkedinLogo,
   },
   {

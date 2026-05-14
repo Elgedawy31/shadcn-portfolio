@@ -34,7 +34,7 @@ const terminalResponses: Record<string, string[]> = {
   ],
   contact: [
     "email: mohamedelgedawy40@gmail.com",
-    "linkedin: linkedin.com/in/mohamedelgedawy",
+    "linkedin: linkedin.com/in/mohamed-elgedawy-780500242",
     "github: github.com/Elgedawy31",
   ],
   resume: ["resume: /mohamed-elgedawy-fullStack.pdf"],

@@ -140,7 +140,7 @@ export const metadata: Metadata = {
     "website:domain": "mohamedelgedawy.com",
     "resume:url": resumePreviewUrl,
     "contact:email": "mohamedelgedawy40@gmail.com",
-    "linkedin:profile": "https://linkedin.com/in/mohamedelgedawy",
+    "linkedin:profile": "https://www.linkedin.com/in/mohamed-elgedawy-780500242/",
     "github:profile": "https://github.com/Elgedawy31",
   },
 }
@@ -162,7 +162,7 @@ const personJsonLd = {
     addressCountry: "EG",
   },
   sameAs: [
-    "https://linkedin.com/in/mohamedelgedawy",
+    "https://www.linkedin.com/in/mohamed-elgedawy-780500242/",
     "https://github.com/Elgedawy31",
   ],
   alumniOf: {
