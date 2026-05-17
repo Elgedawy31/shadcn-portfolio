@@ -21,7 +21,12 @@ const skillProgress = [
 ]
 
 const terminalResponses: Record<string, string[]> = {
-  help: ["commands:", "about, skills, contact, resume, status, clear"],
+  help: [
+    "linux commands:",
+    "pwd, whoami, ls, ls -la, cd <dir>, cat <file>, echo <text>, clear",
+    "portfolio files:",
+    "cat about.txt, cat skills.txt, cat contact.txt, cat resume.txt",
+  ],
   about: [
     "Mohamed Elgedawy",
     "Full Stack Engineer building scalable React, Next.js, Node.js, and cloud-ready products.",
@@ -41,6 +46,67 @@ const terminalResponses: Record<string, string[]> = {
   status: [
     "open to new opportunities",
     "available for frontend, full-stack, and performance-focused product work",
+  ],
+}
+
+const directories: Record<string, string[]> = {
+  "/home/mohamed": [
+    "about.txt",
+    "skills.txt",
+    "contact.txt",
+    "resume.txt",
+    "projects",
+    "stack",
+  ],
+  "/home/mohamed/projects": ["auto-power", "cladcut", "alomera", "fofodio"],
+  "/home/mohamed/projects/auto-power": ["README.md", "stack.txt"],
+  "/home/mohamed/projects/cladcut": ["README.md", "stack.txt"],
+  "/home/mohamed/projects/alomera": ["README.md", "stack.txt"],
+  "/home/mohamed/projects/fofodio": ["README.md", "stack.txt"],
+  "/home/mohamed/stack": ["frontend.txt", "backend.txt", "devops.txt"],
+}
+
+const files: Record<string, string[]> = {
+  "/home/mohamed/about.txt": terminalResponses.about,
+  "/home/mohamed/skills.txt": terminalResponses.skills,
+  "/home/mohamed/contact.txt": terminalResponses.contact,
+  "/home/mohamed/resume.txt": terminalResponses.resume,
+  "/home/mohamed/projects/auto-power/README.md": [
+    "Auto Power",
+    "Car dealership and CRM platform with listings, APIs, Docker, and CI/CD.",
+  ],
+  "/home/mohamed/projects/auto-power/stack.txt": [
+    "Next.js, TypeScript, shadcn/ui, CRM, CI/CD",
+  ],
+  "/home/mohamed/projects/cladcut/README.md": [
+    "CladCut",
+    "Cladding fabrication software that reduces drawing preparation time by 85%.",
+  ],
+  "/home/mohamed/projects/cladcut/stack.txt": [
+    "Next.js, TypeScript, shadcn/ui, architecture, design patterns",
+  ],
+  "/home/mohamed/projects/alomera/README.md": [
+    "Alomera",
+    "Agriculture e-commerce platform with dashboard operations and deployment foundations.",
+  ],
+  "/home/mohamed/projects/alomera/stack.txt": [
+    "Next.js, TypeScript, dashboard, Docker, CI/CD",
+  ],
+  "/home/mohamed/projects/fofodio/README.md": [
+    "Fofodio Platform",
+    "Enterprise ERP/CRM modules with frontend, backend, and deployment workflows.",
+  ],
+  "/home/mohamed/projects/fofodio/stack.txt": [
+    "ERP, CRM, monorepo, module federation, Docker",
+  ],
+  "/home/mohamed/stack/frontend.txt": [
+    "React, Next.js, TypeScript, React Native, Tailwind CSS, TanStack Query",
+  ],
+  "/home/mohamed/stack/backend.txt": [
+    "Node.js, NestJS, Express.js, REST, GraphQL, WebSockets, OpenAPI",
+  ],
+  "/home/mohamed/stack/devops.txt": [
+    "Docker, Kubernetes, CI/CD, Nginx, AWS, Azure, Linux, Terraform",
   ],
 }
 
@@ -65,11 +131,142 @@ const terminalLineVariants: Variants = {
   }),
 }
 
+function resolvePath(cwd: string, target = ".") {
+  if (target === "~") {
+    return "/home/mohamed"
+  }
+
+  const basePath = target.startsWith("/")
+    ? target
+    : `${cwd}/${target === "." ? "" : target}`
+  const parts = basePath.split("/").filter(Boolean)
+  const resolvedParts: string[] = []
+
+  for (const part of parts) {
+    if (part === ".") {
+      continue
+    }
+
+    if (part === "..") {
+      resolvedParts.pop()
+      continue
+    }
+
+    resolvedParts.push(part)
+  }
+
+  return `/${resolvedParts.join("/")}`
+}
+
+function formatPath(path: string) {
+  return path.replace("/home/mohamed", "~")
+}
+
+function runShellCommand(command: string, cwd: string) {
+  const normalizedCommand = command.trim()
+  const [program = "", ...args] = normalizedCommand.split(/\s+/)
+  const firstArg = args[0]
+
+  if (terminalResponses[normalizedCommand]) {
+    return { cwd, output: terminalResponses[normalizedCommand] }
+  }
+
+  switch (program) {
+    case "pwd":
+      return { cwd, output: [cwd] }
+    case "whoami":
+      return { cwd, output: ["mohamed"] }
+    case "hostname":
+      return { cwd, output: ["portfolio"] }
+    case "ls": {
+      const targetPath = resolvePath(cwd, firstArg?.startsWith("-") ? "." : firstArg)
+      const entries = directories[targetPath]
+
+      if (!entries) {
+        return {
+          cwd,
+          output: [`ls: cannot access '${firstArg ?? "."}': No such directory`],
+        }
+      }
+
+      if (args.includes("-la") || args.includes("-al")) {
+        return {
+          cwd,
+          output: [
+            "drwxr-xr-x  mohamed  mohamed  .",
+            "drwxr-xr-x  mohamed  mohamed  ..",
+            ...entries.map((entry) => {
+              const entryPath = resolvePath(targetPath, entry)
+              const mode = directories[entryPath] ? "drwxr-xr-x" : "-rw-r--r--"
+
+              return `${mode}  mohamed  mohamed  ${entry}`
+            }),
+          ],
+        }
+      }
+
+      return { cwd, output: [entries.join("  ")] }
+    }
+    case "cd": {
+      const nextPath = resolvePath(cwd, firstArg ?? "~")
+
+      if (!directories[nextPath]) {
+        return {
+          cwd,
+          output: [`cd: no such file or directory: ${firstArg ?? ""}`],
+        }
+      }
+
+      return { cwd: nextPath, output: [] }
+    }
+    case "cat": {
+      if (!firstArg) {
+        return { cwd, output: ["cat: missing file operand"] }
+      }
+
+      const filePath = resolvePath(cwd, firstArg)
+      const output = files[filePath]
+
+      if (!output) {
+        return { cwd, output: [`cat: ${firstArg}: No such file`] }
+      }
+
+      return { cwd, output }
+    }
+    case "echo":
+      return {
+        cwd,
+        output: [
+          args
+            .join(" ")
+            .replace("$STATUS", "Open to new opportunities")
+            .replace("$USER", "mohamed")
+            .replace("$PWD", cwd),
+        ],
+      }
+    case "date":
+      return { cwd, output: [new Date().toString()] }
+    case "clear":
+      return { cwd, output: [] }
+    default:
+      return {
+        cwd,
+        output: [
+          `${program}: command not found`,
+          `type "help" for available commands`,
+        ],
+      }
+  }
+}
+
 function LinuxWorkstation() {
   const terminalOutputRef = React.useRef<HTMLDivElement>(null)
   const terminalInputRef = React.useRef<HTMLInputElement>(null)
   const isSplashReady = useSplashReady()
   const [command, setCommand] = React.useState("")
+  const [cwd, setCwd] = React.useState("/home/mohamed")
+  const [commandHistory, setCommandHistory] = React.useState<string[]>([])
+  const [historyIndex, setHistoryIndex] = React.useState<number | null>(null)
   const [history, setHistory] = React.useState([
     { command: "echo $STATUS", output: ["Open to new opportunities"] },
     { command: "help", output: terminalResponses.help },
@@ -105,7 +302,7 @@ function LinuxWorkstation() {
   function runCommand(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
-    const normalizedCommand = command.trim().toLowerCase()
+    const normalizedCommand = command.trim()
 
     if (!normalizedCommand) {
       return
@@ -114,20 +311,83 @@ function LinuxWorkstation() {
     if (normalizedCommand === "clear") {
       setHistory([])
       setCommand("")
+      setCommandHistory((currentHistory) => [...currentHistory, normalizedCommand])
+      setHistoryIndex(null)
       return
     }
+
+    const result = runShellCommand(normalizedCommand, cwd)
 
     setHistory((currentHistory) => [
       ...currentHistory,
       {
-        command: normalizedCommand,
-        output: terminalResponses[normalizedCommand] ?? [
-          `command not found: ${normalizedCommand}`,
-          `type "help" for available commands`,
-        ],
+        command: `${formatPath(cwd)} $ ${normalizedCommand}`,
+        output: result.output,
       },
     ])
+    setCwd(result.cwd)
+    setCommandHistory((currentHistory) => [...currentHistory, normalizedCommand])
+    setHistoryIndex(null)
     setCommand("")
+  }
+
+  function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+    if (event.key === "ArrowUp") {
+      event.preventDefault()
+
+      const nextIndex =
+        historyIndex === null
+          ? commandHistory.length - 1
+          : Math.max(0, historyIndex - 1)
+
+      if (nextIndex >= 0) {
+        setHistoryIndex(nextIndex)
+        setCommand(commandHistory[nextIndex] ?? "")
+      }
+    }
+
+    if (event.key === "ArrowDown") {
+      event.preventDefault()
+
+      if (historyIndex === null) {
+        return
+      }
+
+      const nextIndex = historyIndex + 1
+
+      if (nextIndex >= commandHistory.length) {
+        setHistoryIndex(null)
+        setCommand("")
+        return
+      }
+
+      setHistoryIndex(nextIndex)
+      setCommand(commandHistory[nextIndex] ?? "")
+    }
+
+    if (event.key === "Tab") {
+      event.preventDefault()
+
+      const currentEntries = directories[cwd] ?? []
+      const commands = [
+        "help",
+        "pwd",
+        "whoami",
+        "ls",
+        "ls -la",
+        "cd",
+        "cat",
+        "echo",
+        "date",
+        "clear",
+      ]
+      const suggestions = [...commands, ...currentEntries]
+      const match = suggestions.find((item) => item.startsWith(command.trim()))
+
+      if (match) {
+        setCommand(match)
+      }
+    }
   }
 
   return (
@@ -271,11 +531,12 @@ function LinuxWorkstation() {
             onSubmit={runCommand}
             className="mt-4 flex items-center gap-2 border-t border-border/70 pt-3"
           >
-            <span className="text-primary">$</span>
+            <span className="text-primary">{formatPath(cwd)} $</span>
             <input
               ref={terminalInputRef}
               value={command}
               onChange={(event) => setCommand(event.target.value)}
+              onKeyDown={handleKeyDown}
               aria-label="Portfolio terminal command"
               placeholder='Type "help" for commands...'
               className="min-w-0 flex-1 bg-transparent text-foreground outline-none placeholder:text-muted-foreground/70"
