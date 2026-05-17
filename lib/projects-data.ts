@@ -8,6 +8,10 @@ export type ProjectEntry = {
   summary: string
   impact: string
   liveUrl?: string
+  repoLinks?: readonly {
+    label: string
+    href: string
+  }[]
   imageSrc?: string
   imageAlt?: string
   tags: readonly string[]
@@ -100,6 +104,16 @@ export const projectEntries: readonly ProjectEntry[] = [
       "A modular enterprise platform with admin, CRM, communication, backend services, and deployment workflows.",
     impact:
       "Large-scale business modules structured for maintainable frontend and backend development.",
+    repoLinks: [
+      {
+        label: "Frontend Repo",
+        href: "https://github.com/Elgedawy31/rofodio-frontend",
+      },
+      {
+        label: "Backend Repo",
+        href: "https://github.com/Elgedawy31/rofodio-backend",
+      },
+    ],
     tags: ["ERP", "CRM", "Monorepo", "Module federation"],
     highlights: [
       "Built enterprise modules including admin panel, CRM, and communication workflows.",

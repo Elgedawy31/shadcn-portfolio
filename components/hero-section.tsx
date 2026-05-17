@@ -4,10 +4,10 @@ import * as React from "react"
 import {
   ArrowUpRight,
   Briefcase,
-  DownloadSimple,
   Gauge,
   HandWaving,
   Package,
+  PaperPlaneTilt,
   PlugsConnected,
 } from "@phosphor-icons/react"
 import type { Icon } from "@phosphor-icons/react"
@@ -267,9 +267,9 @@ function HeroSection() {
           >
             <motion.div>
               <Button asChild size="lg" className="h-10 px-4">
-                <a href="/mohamed-elgedawy-fullStack.pdf">
-                  <DownloadSimple weight="bold" className="size-4" />
-                  Download resume
+                <a href="#contact">
+                  <PaperPlaneTilt weight="bold" className="size-4" />
+                  Let&apos;s talk
                 </a>
               </Button>
             </motion.div>

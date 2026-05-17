@@ -328,6 +328,26 @@ function ProjectsSection() {
                             <ArrowUpRight weight="bold" className="size-3.5" />
                           </a>
                         ) : null}
+
+                        {project.repoLinks?.length ? (
+                          <div className="flex flex-wrap gap-2">
+                            {project.repoLinks.map((repoLink) => (
+                              <a
+                                key={repoLink.href}
+                                href={repoLink.href}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="inline-flex w-fit items-center gap-2 border border-white/16 bg-white/[0.06] px-4 py-2.5 font-mono text-xs text-white/82 transition-colors hover:bg-white/10"
+                              >
+                                {repoLink.label}
+                                <ArrowUpRight
+                                  weight="bold"
+                                  className="size-3.5"
+                                />
+                              </a>
+                            ))}
+                          </div>
+                        ) : null}
                       </DialogHeader>
 
                       <aside className="space-y-6 border-t border-white/10 pt-6 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-8">
